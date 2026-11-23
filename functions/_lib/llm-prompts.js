@@ -47,3 +47,29 @@ CARD_JSON:${JSON.stringify({ target_text: card.target_text, english: card.englis
     translit_latin: card.translit_latin, translit_hebrew: card.translit_hebrew, example_target: card.example_target })}
 NOTE:${note || '(no note — check for dialect/MSA drift and wrong translations)'}`;
 }
+
+// ---- Phase 3: grammar ----
+const AXES = (p) => Object.entries(p.grammar_axes || {}).map(([k, v]) => `${k}: ${v.join('/')}`).join('; ');
+
+export function grammarPrompt(p, topicLabel, focus, n, known, avoid) {
+  return `TASK: drills
+Create ${n} grammar production drills for the topic "${topicLabel}".${focus ? ` Concentrate on ${focus.axis} = ${focus.value}, which the learner keeps getting wrong.` : ''}
+Each drill is a PROMPT in English and Hebrew that states the grammatical axes explicitly (examples: "she wrote", "you (f) want", "with the (dat.) man"), and the learner must produce the target-language form (the ANSWER).
+Use simple, high-frequency vocabulary, preferring words from this list the learner already knows: ${JSON.stringify(known)}.
+Axes available for tags (use only these values): ${AXES(p)}.
+Do not repeat these existing prompts: ${JSON.stringify(avoid)}.
+Return {"items": [...]}. Each item: {"target_text": the ANSWER in ${p.script} script${p.diacritics ? ' (fully vowelled)' : ''},
+${p.transliteration?.enabled ? '"translit_latin": string, "translit_hebrew": string, ' : ''}"english": the English prompt with axes explicit, "hebrew": the Hebrew prompt with axes explicit (Hebrew letters),
+"cognate_hint": null, "tags": {one value for EACH axis that applies, using only the allowed values}, "example": {"target": a short sentence using the form, "en": English, "he": Hebrew}}.`;
+}
+
+export function referencePrompt(p, topicLabel, only) {
+  return `TASK: reference
+Write ${only ? 'ONE reference table' : '1 to 3 compact reference tables'} for the grammar topic "${topicLabel}" in ${p.names.en}.${only ? ` Table title: ${JSON.stringify(only.title)}. ${only.note ? 'Learner note: ' + only.note : ''}` : ''}
+Pronouns of this language: ${JSON.stringify(p.pronouns)}. Axes: ${AXES(p)}.
+Return {"tables": [{"title": {"en": string, "he": string}, "columns": [{"en": string, "he": string}, ...],
+"rows": [[cell, ...], ...], "notes": {"en": string, "he": string} | null}]}.
+Every row has exactly as many cells as there are columns, and at least 2 rows. A cell is either a label {"en": string, "he": string}
+or a target-language form {"t": string in ${p.script} script${p.diacritics ? ' (fully vowelled)' : ''}${p.transliteration?.enabled ? ', "latin": string, "hebrew": string (transliteration in Hebrew letters)' : ''}}.
+Use a model verb or noun that is common and regular where the topic needs examples.`;
+}

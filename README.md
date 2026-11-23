@@ -3,7 +3,7 @@
 Personal multi-language learning app. Plain HTML/CSS/JS on Cloudflare Pages + Pages Functions + D1.
 Language behavior lives in `public/profiles/*.json`, not in code. Full spec: `language-app-prompt.md`.
 
-**Status: Phase 2** (Phase 1 + LLM adapter, seed-deck generation, "I want to say…", deck editor, daily new-items flow).
+**Status: Phase 3** (Phases 1–2 + grammar drills, reference page, weak-spot tracking).
 
 ## Layout
 - `public/` static app (`js/`, `strings/{en,he}.json`, `profiles/`, `data/arabic-alphabet.json`)
@@ -26,6 +26,19 @@ Local dev: copy `.dev.vars.example` to `.dev.vars` and put your Gemini key in it
 - Edit or fix the seed at `#/deck`: search/filter, edit any field, delete, unflag, or "Regenerate with AI" for a flagged card.
 - To regenerate a whole seed: delete cards with source `frequency` from the Deck page (or in D1:
   `DELETE FROM cards WHERE profile='ar-lev' AND json_extract(tags,'$.seed')=1;`) and run Generate again.
+
+## Grammar (Phase 3)
+- Topics come from the profile's `grammar_topics` (labels in `grammar_topic_labels`, he/en). Starting a topic generates ~20 production
+  drills (prompt states the axes: "she wrote" → answer) plus its reference tables. Drills are tagged with the profile's `grammar_axes`
+  and are `source = grammar`; they enter only through the daily grammar step, never the new-items queue.
+- **Unlock rule:** the next topic starts automatically when the current one reaches ≥70% Good/Easy over its last 60 reviews
+  (min. 15 reviews). You can also start it yourself on `#/reference`.
+- **Weak spots:** recency-weighted miss rate per axis value (Again = 1, Hard = 0.5, half-life 30 days, min. 5 reviews). The daily
+  grammar step drills the weakest value (≥25% missed) with fresh targeted cards, otherwise continues the current topic.
+- **Reference page** (`#/reference`): tables for the topics you've started, plus weak spots. "Report / regenerate" rewrites a table
+  using your note. New profiles get this for free from their JSON; add `grammar_topic_labels` for readable topic names.
+- Tuning constants are at the top of `functions/_lib/grammar.js`.
+- Remember `npm run migrate:remote` after pushing (migration 0003).
 
 ## "I want to say…"
 `#/say`: describe a situation in Hebrew or English; the LLM adds 3–8 phrases/words as `personal` cards that come before the frequency list.

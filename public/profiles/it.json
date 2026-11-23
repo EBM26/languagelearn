@@ -90,5 +90,47 @@
     "batch": 20,
     "verify": false
   },
-  "new_per_day_default": 7
+  "new_per_day_default": 7,
+  "grammar_topic_labels": {
+    "noun-gender-plurals": {
+      "en": "Noun gender & plurals",
+      "he": "מין ורבים של שמות עצם"
+    },
+    "articles": {
+      "en": "Articles",
+      "he": "תוויות"
+    },
+    "present-are-ere-ire": {
+      "en": "Present (-are/-ere/-ire)",
+      "he": "הווה (-are/-ere/-ire)"
+    },
+    "key-irregulars": {
+      "en": "Key irregular verbs",
+      "he": "פעלים לא־רגילים עיקריים"
+    },
+    "passato-prossimo-avere-essere": {
+      "en": "Passato prossimo (avere/essere)",
+      "he": "פסאטו פרוסימו (avere/essere)"
+    },
+    "reflexive-verbs": {
+      "en": "Reflexive verbs",
+      "he": "פעלים רפלקסיביים"
+    },
+    "imperfetto": {
+      "en": "Imperfetto",
+      "he": "אימפרפקטו"
+    },
+    "future": {
+      "en": "Future",
+      "he": "עתיד"
+    },
+    "object-pronouns": {
+      "en": "Object pronouns",
+      "he": "כינויי מושא"
+    },
+    "prepositions-with-articles": {
+      "en": "Prepositions with articles",
+      "he": "מילות יחס עם תוויות"
+    }
+  }
 }

@@ -91,5 +91,47 @@
     "verify": true,
     "instructions": "Frequency-ordered everyday Levantine (Palestinian) vocabulary and short useful phrases. Prefer colloquial dialect forms over MSA (e.g. 'shu' not 'madha', 'halla'' not 'al-aan')."
   },
-  "new_per_day_default": 7
+  "new_per_day_default": 7,
+  "grammar_topic_labels": {
+    "subject-pronouns": {
+      "en": "Subject pronouns",
+      "he": "כינויי גוף"
+    },
+    "possessive-suffixes": {
+      "en": "Possessive suffixes",
+      "he": "כינויי קניין (סיומות)"
+    },
+    "object-suffixes": {
+      "en": "Object suffixes",
+      "he": "כינויי מושא (סיומות)"
+    },
+    "past-tense": {
+      "en": "Past tense",
+      "he": "עבר"
+    },
+    "present-b-prefix": {
+      "en": "Present with b-",
+      "he": "הווה עם ב-"
+    },
+    "imperative": {
+      "en": "Imperative",
+      "he": "ציווי"
+    },
+    "future-rah": {
+      "en": "Future (rah/ha-)",
+      "he": "עתיד (רח/הא-)"
+    },
+    "negation": {
+      "en": "Negation",
+      "he": "שלילה"
+    },
+    "gender-number-agreement": {
+      "en": "Gender & number agreement",
+      "he": "התאמת מין ומספר"
+    },
+    "top-50-verbs": {
+      "en": "Top 50 verbs",
+      "he": "50 הפעלים השכיחים"
+    }
+  }
 }

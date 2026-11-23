@@ -18,7 +18,7 @@ export async function onRequestGet({ request, env }) {
   const fresh = left === 0 ? [] : (await env.DB.prepare(
     `SELECT c.*, c.direction AS dir FROM cards c
       LEFT JOIN review_state r ON r.card_id = c.id AND r.direction = c.direction
-      WHERE c.profile = ?1 AND c.flagged = 0 AND r.card_id IS NULL
+      WHERE c.profile = ?1 AND c.flagged = 0 AND c.source != 'grammar' AND r.card_id IS NULL
       ORDER BY c.seq, c.id LIMIT ?2`).bind(profile, left).all()).results;
   return json({ due, new: fresh, new_per_day: npd, new_today: newToday });
 }

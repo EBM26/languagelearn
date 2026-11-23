@@ -102,5 +102,20 @@ function mock(user) {
     return JSON.stringify({ items: [{ ...item(7), target_text: c.target_text, english: c.english + ' (regenerated)' }] });
   }
   if (task === 'phrases') return JSON.stringify({ items: [1, 2, 3, 4].map((i) => item(900 + i, { type: i > 2 ? 'word' : 'phrase' })) });
+  if (task === 'drills') {
+    const n = +/Create (\d+)/.exec(user)[1], f = /Concentrate on (\w+) = (\w+)/.exec(user);
+    const seen = new Set(JSON.parse(/existing prompts: (\[.*\])\./.exec(user)?.[1] || '[]'));
+    const T = ['past', 'present', 'future'], G = ['m', 'f'];
+    return JSON.stringify({ items: Array.from({ length: n }, (_, i) => {
+      const k = seen.size + i + 1000 + Math.floor(Math.random() * 1e6);
+      return item(k, { type: 'word', english: 'drill ' + k, hebrew: 'תרגיל ' + k,
+        tags: { person: String(1 + (k % 3)), gender: G[k % 2], number: 'sg', tense: T[k % 3], ...(f ? { [f[1]]: f[2] } : {}) } });
+    }) });
+  }
+  if (task === 'reference') {
+    const cell = (n) => ({ t: arabic(n), latin: 'm' + n, hebrew: 'מ' + n });
+    return JSON.stringify({ tables: [{ title: { en: 'Mock table', he: 'טבלת דוגמה' }, columns: [{ en: 'Pronoun', he: 'כינוי' }, { en: 'Form', he: 'צורה' }],
+      rows: [[{ en: 'I', he: 'אני' }, cell(1)], [{ en: 'you', he: 'אתה' }, cell(2)]], notes: null }] });
+  }
   throw new Error('mock: unknown task');
 }

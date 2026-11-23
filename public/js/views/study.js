@@ -36,7 +36,7 @@ export async function render(root) {
   }
 
   async function session(due, fresh) {
-    const total = due.length + fresh.length * 2;
+    let total = due.length + fresh.length * 2;
     let done = 0, reviewed = 0;
     const bar = h('div', {}), title = h('h2', {}), body = h('div', {}), skip = h('button', { class: 'btn secondary small' }, t('skip_step'));
     clear(stage).append(h('div', { class: 'progress' }, bar), title, body, h('div', { class: 'row', style: 'margin-top:.5rem' }, skip));
@@ -90,9 +90,23 @@ export async function render(root) {
       next();
     });
 
-    await step(t('review_title'), due, 'card');
+    const mark = (name) => api.post('/api/session-step', { profile: code, step: name }).catch(() => {});
+    await step(t('review_title'), due, 'card'); if (due.length) mark('reviews');
     await step(t('intro_title'), fresh, 'intro');
-    await step(t('quiz_title'), fresh, 'card');
+    await step(t('quiz_title'), fresh, 'card'); if (fresh.length) mark('new');
+    if (p.grammar_topics?.length) {                         // grammar drill on the weakest tag
+      title.textContent = t('grammar_step'); clear(body).append(h('p', { class: 'muted' }, t('generating')));
+      try {
+        const g = await api.post('/api/grammar/drills', { profile: code });
+        total += g.cards.length;
+        const label = g.focus ? ` — ${t('grammar_focus', { label: `${t('axis_' + g.focus.axis)} = ${g.focus.value}` })}` : '';
+        await step(t('grammar_step') + label, g.cards, 'card'); if (g.cards.length) mark('grammar');
+      } catch (e) {
+        await new Promise((resolve) => { skip.style.display = 'none';
+          clear(body).append(h('p', { class: 'err' }, `${t('grammar_unavailable')}: ${e.message}`), h('button', { class: 'btn', onclick: resolve }, t('continue'))); });
+        skip.style.display = '';
+      }
+    }
     bar.style.width = '100%';
     clear(stage).append(h('div', { class: 'card-box study-card' }, h('h2', {}, t('session_done')),
       h('p', { class: 'muted' }, `${reviewed} ${t('reviewed')}. ${t('session_done_sub')}`),

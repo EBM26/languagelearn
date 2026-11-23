@@ -8,6 +8,8 @@ export async function onRequestGet({ request, env }) {
   const source = u.searchParams.get('source'), type = u.searchParams.get('type'), q = u.searchParams.get('q');
   if (source) add('source = ?', source);
   if (type) add('type = ?', type);
+  const topic = u.searchParams.get('topic');
+  if (topic) add("json_extract(tags, '$.topic') = ?", topic);
   if (u.searchParams.get('flagged') === '1') where.push('flagged = 1');
   if (q) { args.push(`%${q}%`); const n = args.length; where.push(`(target_text LIKE ?${n} OR english LIKE ?${n} OR hebrew LIKE ?${n})`); }
   const page = Math.max(0, parseInt(u.searchParams.get('page') || '0', 10) || 0);

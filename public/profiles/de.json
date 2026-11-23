@@ -103,5 +103,51 @@
     "batch": 20,
     "verify": false
   },
-  "new_per_day_default": 7
+  "new_per_day_default": 7,
+  "grammar_topic_labels": {
+    "noun-gender-plurals": {
+      "en": "Noun gender & plurals",
+      "he": "מין ורבים של שמות עצם"
+    },
+    "cases-nom-acc-dat": {
+      "en": "Cases: nom., acc., dat.",
+      "he": "יחסות: נומינטיב, אקוזטיב, דטיב"
+    },
+    "article-adjective-endings": {
+      "en": "Article & adjective endings",
+      "he": "סיומות תווית ותואר"
+    },
+    "present-key-irregulars": {
+      "en": "Present & key irregulars",
+      "he": "הווה ופעלים לא־רגילים"
+    },
+    "modal-verbs": {
+      "en": "Modal verbs",
+      "he": "פעלי מודאליות"
+    },
+    "word-order": {
+      "en": "Word order",
+      "he": "סדר מילים"
+    },
+    "separable-verbs": {
+      "en": "Separable verbs",
+      "he": "פעלים ניתקים"
+    },
+    "perfekt-haben-sein": {
+      "en": "Perfekt (haben/sein)",
+      "he": "פרפקט (haben/sein)"
+    },
+    "praeteritum-common": {
+      "en": "Präteritum (common verbs)",
+      "he": "פרטריטום (פעלים נפוצים)"
+    },
+    "two-way-prepositions": {
+      "en": "Two-way prepositions",
+      "he": "מילות יחס דו־כיווניות"
+    },
+    "genitive": {
+      "en": "Genitive",
+      "he": "יחסת הקניין (גניטיב)"
+    }
+  }
 }

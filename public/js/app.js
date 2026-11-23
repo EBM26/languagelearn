@@ -8,14 +8,16 @@ import * as alphabet from './views/alphabet.js';
 import * as languages from './views/languages.js';
 import * as say from './views/say.js';
 import * as deck from './views/deck.js';
+import * as reference from './views/reference.js';
 
-const routes = { home, study, alphabet, languages, say, deck };
+const routes = { home, study, alphabet, languages, say, deck, reference };
 
 function renderHeader() {
   const el = clear(document.getElementById('header'));
   const p = profile();
   el.append(h('a', { class: 'brand', href: '#/home' }, t('app')));
-  if (p) el.append(h('a', { href: '#/say' }, t('say')), h('a', { href: '#/deck' }, t('deck')));
+  if (p) el.append(h('a', { href: '#/say' }, t('say')), h('a', { href: '#/deck' }, t('deck')),
+    p.grammar_topics?.length && h('a', { href: '#/reference' }, t('reference')));
   const act = activeCodes();
   if (act.length) el.append(h('label', {}, t('active_lang'),
     h('select', { onchange: async (e) => { await setSetting('active_profile', e.target.value); pickActive(); refresh(); } },
