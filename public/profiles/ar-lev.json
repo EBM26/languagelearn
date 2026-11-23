@@ -1,0 +1,41 @@
+{
+  "code": "ar-lev",
+  "names": { "en": "Arabic (Levantine)", "he": "ערבית (לבנטינית)" },
+  "direction": "rtl",
+  "script": "arabic",
+  "font": {
+    "family": "'Noto Naskh Arabic', serif",
+    "url": "https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600&display=swap",
+    "size": "2.4rem"
+  },
+  "variety_rules": "Target variety: Levantine Arabic, Palestinian flavor. NOT Modern Standard Arabic. Always use the colloquial form; avoid MSA forms whenever a dialect form exists. Write in Arabic script with full diacritics, spelled consistently.",
+  "script_module": {
+    "enabled": true,
+    "data": "/data/arabic-alphabet.json",
+    "pass_threshold": 0.9,
+    "check_words": 20,
+    "marks_regex": "[\\u064B-\\u065F\\u0670]"
+  },
+  "pronunciation_module": null,
+  "transliteration": { "enabled": true, "schemes": ["latin", "hebrew"] },
+  "diacritics": true,
+  "pronouns": ["ana", "inta", "inti", "huwwe", "hiyye", "ihna", "intu", "humme"],
+  "grammar_axes": {
+    "person": ["1", "2", "3"],
+    "gender": ["m", "f"],
+    "number": ["sg", "pl"],
+    "tense": ["past", "present", "future", "imperative"]
+  },
+  "grammar_topics": [
+    "subject-pronouns", "possessive-suffixes", "object-suffixes", "past-tense",
+    "present-b-prefix", "imperative", "future-rah", "negation",
+    "gender-number-agreement", "top-50-verbs"
+  ],
+  "cognate_hint": "hebrew",
+  "speech": { "whisper_lang": "ar", "tts_voice_pref": ["ar-PS", "ar-JO", "ar-LB", "ar-SA", "ar"] },
+  "seed": {
+    "size": 1500,
+    "instructions": "Frequency-ordered everyday Levantine (Palestinian) vocabulary and phrases. Prefer dialect forms over MSA."
+  },
+  "new_per_day_default": 7
+}

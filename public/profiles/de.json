@@ -1,0 +1,31 @@
+{
+  "code": "de",
+  "names": { "en": "German", "he": "גרמנית" },
+  "direction": "ltr",
+  "script": "latin",
+  "font": { "family": "system-ui, sans-serif", "url": null, "size": "1.8rem" },
+  "variety_rules": "Standard German (Hochdeutsch). Always give nouns with their article (der/die/das). Note false friends against English explicitly.",
+  "script_module": { "enabled": false },
+  "pronunciation_module": {
+    "enabled": true,
+    "topics": ["umlauts", "ß", "ch", "ei/ie", "eu/äu", "final devoicing", "z/s/w/v"]
+  },
+  "transliteration": { "enabled": false, "schemes": [] },
+  "diacritics": false,
+  "pronouns": ["ich", "du", "er", "sie", "es", "wir", "ihr", "sie (pl)", "Sie (formal)"],
+  "grammar_axes": {
+    "person": ["1", "2", "3"], "gender": ["m", "f", "n"], "number": ["sg", "pl"],
+    "case": ["nom", "acc", "dat", "gen"],
+    "tense": ["present", "perfekt", "praeteritum"]
+  },
+  "grammar_topics": [
+    "noun-gender-plurals", "cases-nom-acc-dat", "article-adjective-endings",
+    "present-key-irregulars", "modal-verbs", "word-order", "separable-verbs",
+    "perfekt-haben-sein", "praeteritum-common", "two-way-prepositions", "genitive"
+  ],
+  "gender_colors": { "m": "#1d4ed8", "f": "#be123c", "n": "#15803d" },
+  "cognate_hint": "english",
+  "speech": { "whisper_lang": "de", "tts_voice_pref": ["de-DE", "de"] },
+  "seed": { "size": 1500, "instructions": "Frequency-ordered everyday Standard German vocabulary and phrases; nouns with der/die/das." },
+  "new_per_day_default": 7
+}

@@ -1,0 +1,838 @@
+{
+ "letters": [
+  {
+   "char": "ا",
+   "name_en": "alif",
+   "name_he": "אליף",
+   "forms": {
+    "isolated": "ا",
+    "initial": "ا",
+    "medial": "ـا",
+    "final": "ـا"
+   },
+   "joins_left": false,
+   "sound_latin": "aa",
+   "sound_he": "אא",
+   "note_en": "Long a. Also carries hamza (أ إ آ). Does not connect to the next letter.",
+   "note_he": "א' ארוכה. נושאת גם המזה. לא מתחברת לאות הבאה."
+  },
+  {
+   "char": "ب",
+   "name_en": "baa",
+   "name_he": "בא",
+   "forms": {
+    "isolated": "ب",
+    "initial": "بـ",
+    "medial": "ـبـ",
+    "final": "ـب"
+   },
+   "joins_left": true,
+   "sound_latin": "b",
+   "sound_he": "ב",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "ت",
+   "name_en": "taa",
+   "name_he": "תא",
+   "forms": {
+    "isolated": "ت",
+    "initial": "تـ",
+    "medial": "ـتـ",
+    "final": "ـت"
+   },
+   "joins_left": true,
+   "sound_latin": "t",
+   "sound_he": "ת",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "ث",
+   "name_en": "thaa",
+   "name_he": "ת'א",
+   "forms": {
+    "isolated": "ث",
+    "initial": "ثـ",
+    "medial": "ـثـ",
+    "final": "ـث"
+   },
+   "joins_left": true,
+   "sound_latin": "th",
+   "sound_he": "ת'",
+   "note_en": "In Levantine usually pronounced t or s.",
+   "note_he": "בלבנטינית נהגית בדרך כלל כ-t או s."
+  },
+  {
+   "char": "ج",
+   "name_en": "jiim",
+   "name_he": "ג'ים",
+   "forms": {
+    "isolated": "ج",
+    "initial": "جـ",
+    "medial": "ـجـ",
+    "final": "ـج"
+   },
+   "joins_left": true,
+   "sound_latin": "j",
+   "sound_he": "ג'",
+   "note_en": "Like English j in 'jam'.",
+   "note_he": "כמו ג' בעברית (ג'אם)."
+  },
+  {
+   "char": "ح",
+   "name_en": "Haa",
+   "name_he": "חא",
+   "forms": {
+    "isolated": "ح",
+    "initial": "حـ",
+    "medial": "ـحـ",
+    "final": "ـح"
+   },
+   "joins_left": true,
+   "sound_latin": "H",
+   "sound_he": "ח",
+   "note_en": "Breathy h from the throat (like Hebrew ח).",
+   "note_he": "ה' גרונית חזקה (כמו ח' עברית)."
+  },
+  {
+   "char": "خ",
+   "name_en": "khaa",
+   "name_he": "ח'א",
+   "forms": {
+    "isolated": "خ",
+    "initial": "خـ",
+    "medial": "ـخـ",
+    "final": "ـخ"
+   },
+   "joins_left": true,
+   "sound_latin": "kh",
+   "sound_he": "ח'",
+   "note_en": "Like the 'ch' in 'Bach' (Hebrew כ rafe).",
+   "note_he": "כמו כ' רפויה בעברית."
+  },
+  {
+   "char": "د",
+   "name_en": "daal",
+   "name_he": "דאל",
+   "forms": {
+    "isolated": "د",
+    "initial": "د",
+    "medial": "ـد",
+    "final": "ـد"
+   },
+   "joins_left": false,
+   "sound_latin": "d",
+   "sound_he": "ד",
+   "note_en": "Does not connect to the next letter.",
+   "note_he": "לא מתחברת לאות הבאה."
+  },
+  {
+   "char": "ذ",
+   "name_en": "dhaal",
+   "name_he": "ד'אל",
+   "forms": {
+    "isolated": "ذ",
+    "initial": "ذ",
+    "medial": "ـذ",
+    "final": "ـذ"
+   },
+   "joins_left": false,
+   "sound_latin": "dh",
+   "sound_he": "ד'",
+   "note_en": "In Levantine usually pronounced d or z. Does not connect.",
+   "note_he": "בלבנטינית נהגית בדרך כלל d או z. לא מתחברת."
+  },
+  {
+   "char": "ر",
+   "name_en": "raa",
+   "name_he": "ראא",
+   "forms": {
+    "isolated": "ر",
+    "initial": "ر",
+    "medial": "ـر",
+    "final": "ـر"
+   },
+   "joins_left": false,
+   "sound_latin": "r",
+   "sound_he": "ר",
+   "note_en": "Rolled r. Does not connect.",
+   "note_he": "ר' מגולגלת. לא מתחברת."
+  },
+  {
+   "char": "ز",
+   "name_en": "zaay",
+   "name_he": "זאי",
+   "forms": {
+    "isolated": "ز",
+    "initial": "ز",
+    "medial": "ـز",
+    "final": "ـز"
+   },
+   "joins_left": false,
+   "sound_latin": "z",
+   "sound_he": "ז",
+   "note_en": "Does not connect.",
+   "note_he": "לא מתחברת."
+  },
+  {
+   "char": "س",
+   "name_en": "siin",
+   "name_he": "סין",
+   "forms": {
+    "isolated": "س",
+    "initial": "سـ",
+    "medial": "ـسـ",
+    "final": "ـس"
+   },
+   "joins_left": true,
+   "sound_latin": "s",
+   "sound_he": "ס",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "ش",
+   "name_en": "shiin",
+   "name_he": "שין",
+   "forms": {
+    "isolated": "ش",
+    "initial": "شـ",
+    "medial": "ـشـ",
+    "final": "ـش"
+   },
+   "joins_left": true,
+   "sound_latin": "sh",
+   "sound_he": "ש",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "ص",
+   "name_en": "Saad",
+   "name_he": "צאד",
+   "forms": {
+    "isolated": "ص",
+    "initial": "صـ",
+    "medial": "ـصـ",
+    "final": "ـص"
+   },
+   "joins_left": true,
+   "sound_latin": "S",
+   "sound_he": "צ",
+   "note_en": "Emphatic s (heavy, back vowels).",
+   "note_he": "s מודגשת (כבדה)."
+  },
+  {
+   "char": "ض",
+   "name_en": "Daad",
+   "name_he": "צ'אד",
+   "forms": {
+    "isolated": "ض",
+    "initial": "ضـ",
+    "medial": "ـضـ",
+    "final": "ـض"
+   },
+   "joins_left": true,
+   "sound_latin": "D",
+   "sound_he": "צ'",
+   "note_en": "Emphatic d.",
+   "note_he": "d מודגשת."
+  },
+  {
+   "char": "ط",
+   "name_en": "Taa",
+   "name_he": "טא",
+   "forms": {
+    "isolated": "ط",
+    "initial": "طـ",
+    "medial": "ـطـ",
+    "final": "ـط"
+   },
+   "joins_left": true,
+   "sound_latin": "T",
+   "sound_he": "ט",
+   "note_en": "Emphatic t.",
+   "note_he": "t מודגשת."
+  },
+  {
+   "char": "ظ",
+   "name_en": "Zaa",
+   "name_he": "ט'א",
+   "forms": {
+    "isolated": "ظ",
+    "initial": "ظـ",
+    "medial": "ـظـ",
+    "final": "ـظ"
+   },
+   "joins_left": true,
+   "sound_latin": "Z",
+   "sound_he": "ט'",
+   "note_en": "Emphatic z (in Levantine often like Daad).",
+   "note_he": "z מודגשת (בלבנטינית לעיתים כמו ض)."
+  },
+  {
+   "char": "ع",
+   "name_en": "'ayn",
+   "name_he": "עין",
+   "forms": {
+    "isolated": "ع",
+    "initial": "عـ",
+    "medial": "ـعـ",
+    "final": "ـع"
+   },
+   "joins_left": true,
+   "sound_latin": "'",
+   "sound_he": "ע",
+   "note_en": "Voiced throat sound (like Hebrew ע, pharyngeal).",
+   "note_he": "צליל גרוני מהדהד (כמו ע' עברית עתיקה)."
+  },
+  {
+   "char": "غ",
+   "name_en": "ghayn",
+   "name_he": "ע'ין",
+   "forms": {
+    "isolated": "غ",
+    "initial": "غـ",
+    "medial": "ـغـ",
+    "final": "ـغ"
+   },
+   "joins_left": true,
+   "sound_latin": "gh",
+   "sound_he": "ע'",
+   "note_en": "Like a French/Parisian r.",
+   "note_he": "כמו ר' צרפתית / ר' גרונית."
+  },
+  {
+   "char": "ف",
+   "name_en": "faa",
+   "name_he": "פא",
+   "forms": {
+    "isolated": "ف",
+    "initial": "فـ",
+    "medial": "ـفـ",
+    "final": "ـف"
+   },
+   "joins_left": true,
+   "sound_latin": "f",
+   "sound_he": "פ",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "ق",
+   "name_en": "qaaf",
+   "name_he": "קאף",
+   "forms": {
+    "isolated": "ق",
+    "initial": "قـ",
+    "medial": "ـقـ",
+    "final": "ـق"
+   },
+   "joins_left": true,
+   "sound_latin": "q",
+   "sound_he": "ק",
+   "note_en": "Palestinian city speech: glottal stop (') — village: k/g. Learn it as q but say it as ' in town.",
+   "note_he": "בדיבור עירוני פלסטיני: עצירה גרונית (א'). בכפרים: k/g."
+  },
+  {
+   "char": "ك",
+   "name_en": "kaaf",
+   "name_he": "כאף",
+   "forms": {
+    "isolated": "ك",
+    "initial": "كـ",
+    "medial": "ـكـ",
+    "final": "ـك"
+   },
+   "joins_left": true,
+   "sound_latin": "k",
+   "sound_he": "כ",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "ل",
+   "name_en": "laam",
+   "name_he": "לאם",
+   "forms": {
+    "isolated": "ل",
+    "initial": "لـ",
+    "medial": "ـلـ",
+    "final": "ـل"
+   },
+   "joins_left": true,
+   "sound_latin": "l",
+   "sound_he": "ל",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "م",
+   "name_en": "miim",
+   "name_he": "מים",
+   "forms": {
+    "isolated": "م",
+    "initial": "مـ",
+    "medial": "ـمـ",
+    "final": "ـم"
+   },
+   "joins_left": true,
+   "sound_latin": "m",
+   "sound_he": "מ",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "ن",
+   "name_en": "nuun",
+   "name_he": "נון",
+   "forms": {
+    "isolated": "ن",
+    "initial": "نـ",
+    "medial": "ـنـ",
+    "final": "ـن"
+   },
+   "joins_left": true,
+   "sound_latin": "n",
+   "sound_he": "נ",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "ه",
+   "name_en": "haa",
+   "name_he": "האא",
+   "forms": {
+    "isolated": "ه",
+    "initial": "هـ",
+    "medial": "ـهـ",
+    "final": "ـه"
+   },
+   "joins_left": true,
+   "sound_latin": "h",
+   "sound_he": "ה",
+   "note_en": "",
+   "note_he": ""
+  },
+  {
+   "char": "و",
+   "name_en": "waaw",
+   "name_he": "ואו",
+   "forms": {
+    "isolated": "و",
+    "initial": "و",
+    "medial": "ـو",
+    "final": "ـو"
+   },
+   "joins_left": false,
+   "sound_latin": "w / uu",
+   "sound_he": "ו / וּ",
+   "note_en": "Consonant w or long u/o. Does not connect.",
+   "note_he": "עיצור w או תנועה u/o ארוכה. לא מתחברת."
+  },
+  {
+   "char": "ي",
+   "name_en": "yaa",
+   "name_he": "יא",
+   "forms": {
+    "isolated": "ي",
+    "initial": "يـ",
+    "medial": "ـيـ",
+    "final": "ـي"
+   },
+   "joins_left": true,
+   "sound_latin": "y / ii",
+   "sound_he": "י / ִי",
+   "note_en": "Consonant y or long i. Has two dots below at the end.",
+   "note_he": "עיצור y או תנועה i ארוכה."
+  }
+ ],
+ "groups": [
+  "ابتثني",
+  "جحخ",
+  "درذز",
+  "سشصض",
+  "طظعغ",
+  "فقكلمهو"
+ ],
+ "vowels": [
+  "َ",
+  "ِ",
+  "ُ"
+ ],
+ "vowel_names": [
+  "a",
+  "i",
+  "u"
+ ],
+ "vowel_he": [
+  "ַ",
+  "ִ",
+  "ֻ"
+ ],
+ "marks": [
+  {
+   "char": "َ",
+   "name_en": "fatha",
+   "name_he": "פתחה",
+   "sound_latin": "a",
+   "sound_he": "א (פתח)",
+   "example": "بَ",
+   "example_latin": "ba",
+   "example_he": "בַּ"
+  },
+  {
+   "char": "ِ",
+   "name_en": "kasra",
+   "name_he": "כסרה",
+   "sound_latin": "i",
+   "sound_he": "י (חיריק)",
+   "example": "بِ",
+   "example_latin": "bi",
+   "example_he": "בִּ"
+  },
+  {
+   "char": "ُ",
+   "name_en": "damma",
+   "name_he": "דמה",
+   "sound_latin": "u",
+   "sound_he": "ו (קובוץ)",
+   "example": "بُ",
+   "example_latin": "bu",
+   "example_he": "בֻּ"
+  },
+  {
+   "char": "ْ",
+   "name_en": "sukun",
+   "name_he": "סוכון",
+   "sound_latin": "(no vowel)",
+   "sound_he": "(ללא תנועה)",
+   "example": "بْ",
+   "example_latin": "b",
+   "example_he": "ב"
+  },
+  {
+   "char": "ّ",
+   "name_en": "shadda",
+   "name_he": "שדה",
+   "sound_latin": "doubled consonant",
+   "sound_he": "עיצור כפול",
+   "example": "بّ",
+   "example_latin": "bb",
+   "example_he": "בּ"
+  },
+  {
+   "char": "ة",
+   "name_en": "taa marbuta",
+   "name_he": "תא מרבוטה",
+   "sound_latin": "-a / -e (-it before a suffix)",
+   "sound_he": "-ה / -ה (-ית לפני סיומת)",
+   "example": "مَدْرَسَة",
+   "example_latin": "madrase",
+   "example_he": "מדרסה"
+  },
+  {
+   "char": "ء",
+   "name_en": "hamza",
+   "name_he": "המזה",
+   "sound_latin": "' (glottal stop)",
+   "sound_he": "עצירה גרונית",
+   "example": "سُؤال",
+   "example_latin": "su'aal",
+   "example_he": "סואל"
+  },
+  {
+   "char": "أ إ آ",
+   "name_en": "alif variants",
+   "name_he": "וריאציות אליף",
+   "sound_latin": "'a / 'i / 'aa",
+   "sound_he": "אַ / אִ / אָא",
+   "example": "أَنا",
+   "example_latin": "ana",
+   "example_he": "אנא"
+  },
+  {
+   "char": "ى",
+   "name_en": "alif maqsura",
+   "name_he": "אליף מקצורה",
+   "sound_latin": "-a (final)",
+   "sound_he": "-א (בסוף מילה)",
+   "example": "مَعْنَى",
+   "example_latin": "ma'na",
+   "example_he": "מענא"
+  }
+ ],
+ "words": [
+  {
+   "text": "بَيْت",
+   "latin": "bayt",
+   "hebrew": "בית",
+   "en": "house",
+   "he": "בית",
+   "cognate": "בית"
+  },
+  {
+   "text": "كِتاب",
+   "latin": "kitaab",
+   "hebrew": "כתאב",
+   "en": "book",
+   "he": "ספר",
+   "cognate": "כתב"
+  },
+  {
+   "text": "أَب",
+   "latin": "ab",
+   "hebrew": "אב",
+   "en": "father",
+   "he": "אבא",
+   "cognate": "אב"
+  },
+  {
+   "text": "أُمّ",
+   "latin": "umm",
+   "hebrew": "אום",
+   "en": "mother",
+   "he": "אמא",
+   "cognate": "אם"
+  },
+  {
+   "text": "أَخ",
+   "latin": "akh",
+   "hebrew": "אח",
+   "en": "brother",
+   "he": "אח",
+   "cognate": "אח"
+  },
+  {
+   "text": "بِنْت",
+   "latin": "bint",
+   "hebrew": "בינת",
+   "en": "girl / daughter",
+   "he": "ילדה / בת",
+   "cognate": "בת"
+  },
+  {
+   "text": "وَلَد",
+   "latin": "walad",
+   "hebrew": "ולד",
+   "en": "boy / son",
+   "he": "ילד / בן",
+   "cognate": ""
+  },
+  {
+   "text": "مَيّ",
+   "latin": "mayy",
+   "hebrew": "מיי",
+   "en": "water",
+   "he": "מים",
+   "cognate": "מים"
+  },
+  {
+   "text": "لَيْل",
+   "latin": "layl",
+   "hebrew": "ליל",
+   "en": "night",
+   "he": "לילה",
+   "cognate": "לילה"
+  },
+  {
+   "text": "يَوْم",
+   "latin": "yawm",
+   "hebrew": "יום",
+   "en": "day",
+   "he": "יום",
+   "cognate": "יום"
+  },
+  {
+   "text": "شَمْس",
+   "latin": "shams",
+   "hebrew": "שמס",
+   "en": "sun",
+   "he": "שמש",
+   "cognate": "שמש"
+  },
+  {
+   "text": "باب",
+   "latin": "baab",
+   "hebrew": "באב",
+   "en": "door",
+   "he": "דלת",
+   "cognate": ""
+  },
+  {
+   "text": "سَلام",
+   "latin": "salaam",
+   "hebrew": "סלאם",
+   "en": "peace; hello",
+   "he": "שלום",
+   "cognate": "שלום"
+  },
+  {
+   "text": "شُكْراً",
+   "latin": "shukran",
+   "hebrew": "שוכראן",
+   "en": "thank you",
+   "he": "תודה",
+   "cognate": ""
+  },
+  {
+   "text": "مَرْحَبا",
+   "latin": "marHaba",
+   "hebrew": "מרחבא",
+   "en": "hello",
+   "he": "שלום",
+   "cognate": ""
+  },
+  {
+   "text": "كَلْب",
+   "latin": "kalb",
+   "hebrew": "כלב",
+   "en": "dog",
+   "he": "כלב",
+   "cognate": "כלב"
+  },
+  {
+   "text": "بِسّ",
+   "latin": "biss",
+   "hebrew": "ביס",
+   "en": "cat",
+   "he": "חתול",
+   "cognate": ""
+  },
+  {
+   "text": "شَجَرة",
+   "latin": "shajara",
+   "hebrew": "שג'רה",
+   "en": "tree",
+   "he": "עץ",
+   "cognate": ""
+  },
+  {
+   "text": "نَجْمة",
+   "latin": "najme",
+   "hebrew": "נג'מה",
+   "en": "star",
+   "he": "כוכב",
+   "cognate": ""
+  },
+  {
+   "text": "يَد",
+   "latin": "yad",
+   "hebrew": "יד",
+   "en": "hand",
+   "he": "יד",
+   "cognate": "יד"
+  },
+  {
+   "text": "عَيْن",
+   "latin": "'ayn",
+   "hebrew": "עין",
+   "en": "eye",
+   "he": "עין",
+   "cognate": "עין"
+  },
+  {
+   "text": "راس",
+   "latin": "raas",
+   "hebrew": "ראס",
+   "en": "head",
+   "he": "ראש",
+   "cognate": "ראש"
+  },
+  {
+   "text": "حَلِيب",
+   "latin": "Haliib",
+   "hebrew": "חליב",
+   "en": "milk",
+   "he": "חלב",
+   "cognate": "חלב"
+  },
+  {
+   "text": "تَمْر",
+   "latin": "tamr",
+   "hebrew": "תמר",
+   "en": "dates",
+   "he": "תמרים",
+   "cognate": "תמר"
+  },
+  {
+   "text": "سَمَك",
+   "latin": "samak",
+   "hebrew": "סמאך",
+   "en": "fish",
+   "he": "דג",
+   "cognate": ""
+  },
+  {
+   "text": "مَدْرَسة",
+   "latin": "madrase",
+   "hebrew": "מדרסה",
+   "en": "school",
+   "he": "בית ספר",
+   "cognate": ""
+  },
+  {
+   "text": "سَيّارة",
+   "latin": "sayyaara",
+   "hebrew": "סיארה",
+   "en": "car",
+   "he": "מכונית",
+   "cognate": ""
+  },
+  {
+   "text": "نُور",
+   "latin": "nuur",
+   "hebrew": "נור",
+   "en": "light",
+   "he": "אור",
+   "cognate": "נור"
+  },
+  {
+   "text": "جَمَل",
+   "latin": "jamal",
+   "hebrew": "ג'מל",
+   "en": "camel",
+   "he": "גמל",
+   "cognate": "גמל"
+  }
+ ],
+ "phrases": [
+  {
+   "text": "كِيفَك؟",
+   "latin": "kiifak?",
+   "hebrew": "כיפַּק?",
+   "en": "How are you? (to a man)",
+   "he": "מה שלומך? (לגבר)"
+  },
+  {
+   "text": "أَهْلَين",
+   "latin": "ahlayn",
+   "hebrew": "אהלאין",
+   "en": "Hello / welcome",
+   "he": "שלום / ברוך הבא"
+  },
+  {
+   "text": "صَباح الخَير",
+   "latin": "SabaaH il-khayr",
+   "hebrew": "צבאח אל-ח'יר",
+   "en": "Good morning",
+   "he": "בוקר טוב"
+  },
+  {
+   "text": "مَسا الخَير",
+   "latin": "masaa il-khayr",
+   "hebrew": "מסא אל-ח'יר",
+   "en": "Good evening",
+   "he": "ערב טוב"
+  },
+  {
+   "text": "شُكْراً كْتير",
+   "latin": "shukran ktiir",
+   "hebrew": "שוכראן כתיר",
+   "en": "Thank you very much",
+   "he": "תודה רבה"
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+name = "languagelearn"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "language-app-db"
+database_id = "<PASTE_ID>"   # replace with the real id from `wrangler d1 list`
