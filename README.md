@@ -19,7 +19,7 @@ Language behavior lives in `public/profiles/*.json`, not in code. Full spec: `la
 
 ## LLM setup
 Provider and models are config in `wrangler.toml [vars]`:
-`LLM_PROVIDER = "gemini"`, `LLM_MODEL = "gemini-2.5-flash"` (tried first) and `LLM_FALLBACK_MODEL = "gemini-2.5-flash-lite"`.
+`LLM_PROVIDER = "gemini"`, `LLM_MODEL = "gemini-3.8-flash"` (tried first) and `LLM_FALLBACK_MODEL = "gemini-3.5-flash-lite"`.
 If the primary model returns 429, a 5xx, a network error or an empty reply, the adapter retries once with the fallback model
 (auth/bad-request errors are not retried). Check the model IDs against Google's current model list if Google renames them.
 The API key is a secret and is **never committed**: set `LLM_API_KEY` in the Cloudflare dashboard (see Deploy).

@@ -22,8 +22,17 @@ export async function llm(env, { system, user, maxTokens = 16000 }) {
   throw last;
 }
 
+// Turn a provider's error response into a short, readable message (no raw JSON).
 async function httpError(provider, res) {
-  const e = new Error(`LLM ${provider} ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const raw = await res.text();
+  let detail = '';
+  try { const j = JSON.parse(raw); detail = j.error?.message || j[0]?.error?.message || j.message || ''; } catch { /* not JSON */ }
+  detail = String(detail || raw).replace(/\s+/g, ' ').trim().slice(0, 140);
+  const hint = res.status === 404 ? 'the model is unavailable'
+    : res.status === 429 ? 'rate limit reached, try again shortly'
+    : res.status === 401 || res.status === 403 ? 'the API key was rejected'
+    : res.status >= 500 ? 'the AI service is having trouble' : 'the request was rejected';
+  const e = new Error(`AI error (${res.status}): ${hint}${detail ? ' - ' + detail : ''}`);
   e.status = res.status;
   return e;
 }

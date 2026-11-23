@@ -10,5 +10,5 @@ database_id = "81c0d4ee-6028-4222-91b7-001ea654a289"   # replace with the real i
 # LLM adapter config. The API key is a secret, set in the Pages dashboard (never committed): LLM_API_KEY.
 [vars]
 LLM_PROVIDER = "gemini"                      # gemini | anthropic | openai | mock
-LLM_MODEL = "gemini-2.5-flash"               # tried first
-LLM_FALLBACK_MODEL = "gemini-2.5-flash-lite" # used if the primary hits 429 / 5xx / network error / empty reply
+LLM_MODEL = "gemini-3.8-flash"               # tried first
+LLM_FALLBACK_MODEL = "gemini-3.5-flash-lite" # used if the primary hits 429 / 5xx / network error / empty reply
