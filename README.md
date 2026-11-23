@@ -10,11 +10,14 @@ Language behavior lives in `public/profiles/*.json`, not in code. Full spec: `la
 - `functions/` Pages Functions (`api/*`, `_lib/fsrs.js`, `_lib/llm.js` stub for Phase 2)
 - `migrations/` D1 schema
 
-## LLM setup (Phase 2)
-Provider and model are config in `wrangler.toml [vars]` (`LLM_PROVIDER` = `anthropic` | `openai` | `mock`, `LLM_MODEL`).
-The key is a secret: `npx wrangler pages secret put LLM_API_KEY --project-name languagelearn`.
-For local dev copy `.dev.vars.example` to `.dev.vars` (default `mock` returns canned data, no key needed;
-switch to `anthropic` and add a key to test for real). To swap providers, change the vars (or add a branch in `functions/_lib/llm.js`).
+## LLM setup
+Provider and models are config in `wrangler.toml [vars]`:
+`LLM_PROVIDER = "gemini"`, `LLM_MODEL = "gemini-2.5-flash"` (tried first) and `LLM_FALLBACK_MODEL = "gemini-2.5-flash-lite"`.
+If the primary model returns 429, a 5xx, a network error or an empty reply, the adapter retries once with the fallback model
+(auth/bad-request errors are not retried). Check the model IDs against Google's current model list if Google renames them.
+The API key is a secret and is **never committed**: set `LLM_API_KEY` in the Cloudflare dashboard (see Deploy).
+Local dev: copy `.dev.vars.example` to `.dev.vars` and put your Gemini key in it
+(`LLM_PROVIDER=mock` gives canned data with no key). Other providers (`anthropic`, `openai`) are still available via the same vars.
 
 ## Seed decks
 - A profile generates a seed deck only if `seed.enabled` is true in its JSON (on for `ar-lev`; off for `it`/`de` until Phase 7).
@@ -27,19 +30,23 @@ switch to `anthropic` and add a key to test for real). To swap providers, change
 ## "I want to say…"
 `#/say`: describe a situation in Hebrew or English; the LLM adds 3–8 phrases/words as `personal` cards that come before the frequency list.
 
-## Setup
+## Local development
 1. `npm install`
-2. Put the real D1 id in `wrangler.toml` (`wrangler d1 list`).
-3. Local: `npm run migrate:local && npm run dev` → http://localhost:8788
-4. Remote DB: `npm run migrate:remote`
+2. `cp .dev.vars.example .dev.vars` and add your Gemini key.
+3. `npm run migrate:local && npm run dev` → http://localhost:8788
 
-## Deploy
-1. `npx wrangler pages project create languagelearn --production-branch main` (once)
-2. `npm run deploy`. The `DB` binding comes from `wrangler.toml`; if the dashboard shows none, add
-   Settings → Bindings → D1 → `DB` → `language-app-db`.
-3. **Cloudflare Access** (dashboard, not code): Zero Trust → Access → Applications → Add self-hosted →
-   domain `languagelearn.pages.dev` (also cover `*.languagelearn.pages.dev` preview URLs) → policy: Allow, emails = yours.
-   No secrets are needed in Phase 1.
+## Deploy (GitHub push)
+Production deploys on every push to `main` through Cloudflare Pages' Git integration. `wrangler.toml` is the source of truth
+for the D1 binding and the `[vars]`; the dashboard only holds the secret.
+1. **One-time:** Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git → pick this repo.
+   Production branch `main`, build command: *(empty)*, build output directory: `public`. Functions in `/functions` are detected automatically.
+2. **One-time secret:** Pages project → Settings → Variables and Secrets → add `LLM_API_KEY` (type *Secret*) for Production
+   (and Preview, if you use preview deployments).
+3. **Database migrations are not run by a push.** After pushing a commit that adds a file to `migrations/`, run
+   `npm run migrate:remote` (applies pending migrations to `language-app-db`). Run it before relying on the new code.
+4. **Cloudflare Access** (dashboard, not code): Zero Trust → Access → Applications → Add self-hosted → domain
+   `<project>.pages.dev` (also `*.<project>.pages.dev` for previews) → policy: Allow, your email.
+5. Deploy = `git push origin main`; watch the build under the project's Deployments tab.
 
 ## Using Phase 1
 Open the app → Study → "Load starting cards" (if empty) (creates 143 Arabic cards: 28 letters, 81 syllables, 29 words, 5 phrases).

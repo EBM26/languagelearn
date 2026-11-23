@@ -1,32 +1,66 @@
-// Provider-agnostic LLM adapter. Choose the provider/model via env vars (wrangler.toml [vars]);
-// the key comes from the LLM_API_KEY secret. To add a provider, add a branch in `complete`.
-export async function llm(env, { system, user, maxTokens = 6000 }) {
-  const provider = env.LLM_PROVIDER || 'anthropic';
+// Provider-agnostic LLM adapter. Provider/models are config (wrangler.toml [vars]); the key is the
+// LLM_API_KEY secret. Default provider: Gemini. LLM_MODEL is tried first; if it fails with a transient
+// error (429, 5xx, network) or returns nothing, LLM_FALLBACK_MODEL (e.g. Flash -> Flash Lite) is tried.
+export async function llm(env, { system, user, maxTokens = 16000 }) {
+  const provider = env.LLM_PROVIDER || 'gemini';
   if (provider === 'mock') return mock(user);
   if (!env.LLM_API_KEY) throw new Error('LLM_API_KEY is not set');
-  if (!env.LLM_MODEL) throw new Error('LLM_MODEL is not set');
-  return complete(provider, env, system, user, maxTokens);
+  const models = [env.LLM_MODEL, env.LLM_FALLBACK_MODEL].filter(Boolean);
+  if (!models.length) throw new Error('LLM_MODEL is not set');
+  let last;
+  for (const model of models) {
+    try {
+      const out = await complete(provider, env, model, system, user, maxTokens);
+      if (out && out.trim()) return out;
+      last = new Error(`empty reply from ${model}`);
+    } catch (e) {
+      last = e;
+      const transient = e.status === undefined || e.status === 429 || e.status >= 500;
+      if (!transient) throw e;           // bad key / bad request: another model won't help
+    }
+  }
+  throw last;
 }
 
-async function complete(provider, env, system, user, maxTokens) {
+async function httpError(provider, res) {
+  const e = new Error(`LLM ${provider} ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  e.status = res.status;
+  return e;
+}
+
+async function complete(provider, env, model, system, user, maxTokens) {
+  if (provider === 'gemini') {
+    const base = env.LLM_BASE_URL || 'https://generativelanguage.googleapis.com';
+    const res = await fetch(`${base}/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-goog-api-key': env.LLM_API_KEY },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: system }] },
+        contents: [{ role: 'user', parts: [{ text: user }] }],
+        generationConfig: { maxOutputTokens: maxTokens, responseMimeType: 'application/json' },
+      }),
+    });
+    if (!res.ok) throw await httpError(provider, res);
+    const j = await res.json();
+    return (j.candidates?.[0]?.content?.parts || []).map((x) => x.text || '').join('');
+  }
   if (provider === 'anthropic') {
     const res = await fetch((env.LLM_BASE_URL || 'https://api.anthropic.com') + '/v1/messages', {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-api-key': env.LLM_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: env.LLM_MODEL, max_tokens: maxTokens, system, messages: [{ role: 'user', content: user }] }),
+      body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: 'user', content: user }] }),
     });
-    if (!res.ok) throw new Error(`LLM ${res.status}: ${(await res.text()).slice(0, 200)}`);
-    const j = await res.json();
-    return (j.content || []).map((b) => b.text || '').join('');
+    if (!res.ok) throw await httpError(provider, res);
+    return ((await res.json()).content || []).map((b) => b.text || '').join('');
   }
   if (provider === 'openai') {
     const res = await fetch((env.LLM_BASE_URL || 'https://api.openai.com') + '/v1/chat/completions', {
       method: 'POST',
       headers: { 'content-type': 'application/json', authorization: `Bearer ${env.LLM_API_KEY}` },
-      body: JSON.stringify({ model: env.LLM_MODEL, max_tokens: maxTokens, response_format: { type: 'json_object' },
+      body: JSON.stringify({ model, max_tokens: maxTokens, response_format: { type: 'json_object' },
         messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }),
     });
-    if (!res.ok) throw new Error(`LLM ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    if (!res.ok) throw await httpError(provider, res);
     return (await res.json()).choices[0].message.content;
   }
   throw new Error(`Unknown LLM_PROVIDER "${provider}"`);
