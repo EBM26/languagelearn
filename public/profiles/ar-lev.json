@@ -1,6 +1,9 @@
 {
   "code": "ar-lev",
-  "names": { "en": "Arabic (Levantine)", "he": "ערבית (לבנטינית)" },
+  "names": {
+    "en": "Arabic (Levantine)",
+    "he": "ערבית (לבנטינית)"
+  },
   "direction": "rtl",
   "script": "arabic",
   "font": {
@@ -17,25 +20,76 @@
     "marks_regex": "[\\u064B-\\u065F\\u0670]"
   },
   "pronunciation_module": null,
-  "transliteration": { "enabled": true, "schemes": ["latin", "hebrew"] },
+  "transliteration": {
+    "enabled": true,
+    "schemes": [
+      "latin",
+      "hebrew"
+    ],
+    "latin_rules": "Latin scheme: aa ii uu = long vowels; a i u short; H=ح kh=خ gh=غ '=ع and ء q=ق j=ج sh=ش th=ث dh=ذ; emphatics capitalised S=ص D=ض T=ط Z=ظ; w y; doubled letter = shadda. Write the dialect pronunciation (Palestinian), not the MSA one.",
+    "hebrew_rules": "Hebrew-letter scheme (Israeli convention, no nikud): ג'=ج ח'=خ ע'=غ ד'=ذ ת'=ث צ'=ض ט'=ظ; ח=ح ע=ع ט=ط צ=ص ק=ق א=ا/ء. Use א/ו/י for long vowels aa/uu/ii."
+  },
   "diacritics": true,
-  "pronouns": ["ana", "inta", "inti", "huwwe", "hiyye", "ihna", "intu", "humme"],
+  "pronouns": [
+    "ana",
+    "inta",
+    "inti",
+    "huwwe",
+    "hiyye",
+    "ihna",
+    "intu",
+    "humme"
+  ],
   "grammar_axes": {
-    "person": ["1", "2", "3"],
-    "gender": ["m", "f"],
-    "number": ["sg", "pl"],
-    "tense": ["past", "present", "future", "imperative"]
+    "person": [
+      "1",
+      "2",
+      "3"
+    ],
+    "gender": [
+      "m",
+      "f"
+    ],
+    "number": [
+      "sg",
+      "pl"
+    ],
+    "tense": [
+      "past",
+      "present",
+      "future",
+      "imperative"
+    ]
   },
   "grammar_topics": [
-    "subject-pronouns", "possessive-suffixes", "object-suffixes", "past-tense",
-    "present-b-prefix", "imperative", "future-rah", "negation",
-    "gender-number-agreement", "top-50-verbs"
+    "subject-pronouns",
+    "possessive-suffixes",
+    "object-suffixes",
+    "past-tense",
+    "present-b-prefix",
+    "imperative",
+    "future-rah",
+    "negation",
+    "gender-number-agreement",
+    "top-50-verbs"
   ],
   "cognate_hint": "hebrew",
-  "speech": { "whisper_lang": "ar", "tts_voice_pref": ["ar-PS", "ar-JO", "ar-LB", "ar-SA", "ar"] },
+  "speech": {
+    "whisper_lang": "ar",
+    "tts_voice_pref": [
+      "ar-PS",
+      "ar-JO",
+      "ar-LB",
+      "ar-SA",
+      "ar"
+    ]
+  },
   "seed": {
+    "enabled": true,
     "size": 1500,
-    "instructions": "Frequency-ordered everyday Levantine (Palestinian) vocabulary and phrases. Prefer dialect forms over MSA."
+    "batch": 20,
+    "verify": true,
+    "instructions": "Frequency-ordered everyday Levantine (Palestinian) vocabulary and short useful phrases. Prefer colloquial dialect forms over MSA (e.g. 'shu' not 'madha', 'halla'' not 'al-aan')."
   },
   "new_per_day_default": 7
 }

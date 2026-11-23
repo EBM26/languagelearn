@@ -1,0 +1,3 @@
+LLM_PROVIDER=mock
+# LLM_PROVIDER=anthropic
+# LLM_API_KEY=sk-...

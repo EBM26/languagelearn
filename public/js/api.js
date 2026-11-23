@@ -9,4 +9,5 @@ export const api = {
   get: (p) => call('GET', p),
   post: (p, b) => call('POST', p, b ?? {}),
   put: (p, b) => call('PUT', p, b),
+  del: (p) => call('DELETE', p),
 };

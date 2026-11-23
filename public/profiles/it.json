@@ -1,29 +1,94 @@
 {
   "code": "it",
-  "names": { "en": "Italian", "he": "איטלקית" },
+  "names": {
+    "en": "Italian",
+    "he": "איטלקית"
+  },
   "direction": "ltr",
   "script": "latin",
-  "font": { "family": "system-ui, sans-serif", "url": null, "size": "1.8rem" },
+  "font": {
+    "family": "system-ui, sans-serif",
+    "url": null,
+    "size": "1.8rem"
+  },
   "variety_rules": "Standard Italian. Note false friends against English explicitly.",
-  "script_module": { "enabled": false },
+  "script_module": {
+    "enabled": false
+  },
   "pronunciation_module": {
     "enabled": true,
-    "topics": ["c/ch/ci", "g/gh/gi", "gli", "gn", "sc", "double consonants", "stress"]
+    "topics": [
+      "c/ch/ci",
+      "g/gh/gi",
+      "gli",
+      "gn",
+      "sc",
+      "double consonants",
+      "stress"
+    ]
   },
-  "transliteration": { "enabled": false, "schemes": [] },
+  "transliteration": {
+    "enabled": false,
+    "schemes": []
+  },
   "diacritics": false,
-  "pronouns": ["io", "tu", "lui", "lei", "Lei (formal)", "noi", "voi", "loro"],
+  "pronouns": [
+    "io",
+    "tu",
+    "lui",
+    "lei",
+    "Lei (formal)",
+    "noi",
+    "voi",
+    "loro"
+  ],
   "grammar_axes": {
-    "person": ["1", "2", "3"], "gender": ["m", "f"], "number": ["sg", "pl"],
-    "tense": ["present", "passato-prossimo", "imperfetto", "future"]
+    "person": [
+      "1",
+      "2",
+      "3"
+    ],
+    "gender": [
+      "m",
+      "f"
+    ],
+    "number": [
+      "sg",
+      "pl"
+    ],
+    "tense": [
+      "present",
+      "passato-prossimo",
+      "imperfetto",
+      "future"
+    ]
   },
   "grammar_topics": [
-    "noun-gender-plurals", "articles", "present-are-ere-ire", "key-irregulars",
-    "passato-prossimo-avere-essere", "reflexive-verbs", "imperfetto", "future",
-    "object-pronouns", "prepositions-with-articles"
+    "noun-gender-plurals",
+    "articles",
+    "present-are-ere-ire",
+    "key-irregulars",
+    "passato-prossimo-avere-essere",
+    "reflexive-verbs",
+    "imperfetto",
+    "future",
+    "object-pronouns",
+    "prepositions-with-articles"
   ],
   "cognate_hint": "english",
-  "speech": { "whisper_lang": "it", "tts_voice_pref": ["it-IT", "it"] },
-  "seed": { "size": 1500, "instructions": "Frequency-ordered everyday Standard Italian vocabulary and phrases." },
+  "speech": {
+    "whisper_lang": "it",
+    "tts_voice_pref": [
+      "it-IT",
+      "it"
+    ]
+  },
+  "seed": {
+    "size": 1500,
+    "instructions": "Frequency-ordered everyday Standard Italian vocabulary and phrases.",
+    "enabled": false,
+    "batch": 20,
+    "verify": false
+  },
   "new_per_day_default": 7
 }
