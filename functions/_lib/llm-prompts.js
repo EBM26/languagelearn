@@ -73,3 +73,27 @@ Every row has exactly as many cells as there are columns, and at least 2 rows. A
 or a target-language form {"t": string in ${p.script} script${p.diacritics ? ' (fully vowelled)' : ''}${p.transliteration?.enabled ? ', "latin": string, "hebrew": string (transliteration in Hebrew letters)' : ''}}.
 Use a model verb or noun that is common and regular where the topic needs examples.`;
 }
+
+// ---- Phase 4: stories ----
+export function storyPrompt(p, { format, words, known, newWords, grammar, note }) {
+  const tr = p.transliteration?.enabled;
+  const sentences = Math.max(4, Math.round(words / 8));
+  return `TASK: story
+Write ${format === 'dialogue' ? 'a short DIALOGUE between two people (give each line a "speaker", a first name)' : 'a short STORY (simple narrative)'} in ${p.names.en} of ABOUT ${words} words, in about ${sentences} short sentences.
+Level: the learner knows ONLY these words (plus very common function words and pronouns): ${JSON.stringify(known)}.
+${known.length < 15 ? 'The learner knows almost nothing yet: use very short, very simple sentences and repeat words.' : ''}
+Use ALL of these new words, and no other unfamiliar vocabulary: ${JSON.stringify(newWords)}.
+${grammar ? `Grammar focus for today: ${grammar.topic}${grammar.focus ? ` (especially ${grammar.focus})` : ''}. Use it naturally several times.` : ''}
+${note ? 'Learner feedback on the previous version: ' + note : ''}
+Return {"title": {"target": string, "en": string, "he": string}, "sentences": [{"speaker": string|null, "target": the sentence in ${p.script} script${p.diacritics ? ' (fully vowelled)' : ''}, ${tr ? '"translit_latin": string, "translit_hebrew": string, ' : ''}"en": English, "he": Hebrew}]}.`;
+}
+
+export function glossPrompt(p, sentences) {
+  const tr = p.transliteration?.enabled;
+  return `TASK: gloss
+Split each sentence into word tokens for a tap-to-translate reader. Tokens, joined by spaces, must reproduce the sentence's words in order (keep punctuation attached to its word).
+For each token give: "t" the surface form exactly as written; "b" the base form worth learning as a vocabulary item (colloquial ${p.names.en}; same as "t" if unchanged; for attached clitics/suffixes give the base word);
+${tr ? '"latin" and "hebrew": transliteration of "b" (Hebrew letters for "hebrew"); ' : ''}"en": short English gloss of the word in context; "he": short Hebrew gloss (Hebrew letters).
+SENTENCES_JSON:${JSON.stringify(sentences.map((s, i) => ({ i, target: s.target })))}
+Return {"sentences": [{"i": index, "tokens": [{"t","b",${tr ? '"latin","hebrew",' : ''}"en","he"}]}]}`;
+}

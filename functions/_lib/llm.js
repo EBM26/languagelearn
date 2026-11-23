@@ -117,5 +117,17 @@ function mock(user) {
     return JSON.stringify({ tables: [{ title: { en: 'Mock table', he: 'טבלת דוגמה' }, columns: [{ en: 'Pronoun', he: 'כינוי' }, { en: 'Form', he: 'צורה' }],
       rows: [[{ en: 'I', he: 'אני' }, cell(1)], [{ en: 'you', he: 'אתה' }, cell(2)]], notes: null }] });
   }
+  if (task === 'story') {
+    const words = +/ABOUT (\d+) words/.exec(user)[1], dialogue = /DIALOGUE/.test(user);
+    const n = Math.max(4, Math.round(words / 8)), seed = 3000 + Math.floor(Math.random() * 1e5);
+    const sent = (i) => Array.from({ length: 6 }, (_, k) => arabic(seed + i * 7 + k)).join(' ') + '.';
+    return JSON.stringify({ title: { target: arabic(seed), en: 'A mock ' + (dialogue ? 'dialogue' : 'story'), he: 'סיפור דוגמה' },
+      sentences: Array.from({ length: n }, (_, i) => ({ speaker: dialogue ? (i % 2 ? 'Sara' : 'Omar') : null, target: sent(i),
+        translit_latin: 'mock sentence ' + i, translit_hebrew: 'משפט ' + i, en: 'Mock sentence ' + i, he: 'משפט דוגמה ' + i })) });
+  }
+  if (task === 'gloss') {
+    const list = JSON.parse(user.slice(user.indexOf('SENTENCES_JSON:') + 15).split('\nReturn')[0]);
+    return JSON.stringify({ sentences: list.map((s) => ({ i: s.i, tokens: s.target.split(' ').map((w, k) => ({ t: w, b: w.replace('.', ''), latin: 'w' + k, hebrew: 'ו' + k, en: 'word ' + k, he: 'מילה ' + k })) })) });
+  }
   throw new Error('mock: unknown task');
 }

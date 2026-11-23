@@ -3,7 +3,7 @@
 Personal multi-language learning app. Plain HTML/CSS/JS on Cloudflare Pages + Pages Functions + D1.
 Language behavior lives in `public/profiles/*.json`, not in code. Full spec: `language-app-prompt.md`.
 
-**Status: Phase 3** (Phases 1–2 + grammar drills, reference page, weak-spot tracking).
+**Status: Phase 4** (Phases 1–3 + daily stories with tap-to-translate and audio).
 
 ## Front-end design system
 - `public/app.css` is the only stylesheet. Colours, spacing, radii, shadows, type scale and widths are CSS variables on `:root`; change them there.
@@ -46,6 +46,17 @@ Local dev: copy `.dev.vars.example` to `.dev.vars` and put your Gemini key in it
   using your note. New profiles get this for free from their JSON; add `grammar_topic_labels` for readable topic names.
 - Tuning constants are at the top of `functions/_lib/grammar.js`.
 - Remember `npm run migrate:remote` after pushing (migration 0003).
+
+## Daily stories (Phase 4)
+- One story per language per day (`#/story`, archive at `#/stories`). Two LLM calls: the story, then word-level glosses, so tapping a word
+  never calls the LLM. Length ramps from ~80 to 200 words; format alternates story/dialogue.
+- The prompt gets your recently reviewed words as the known vocabulary, the next 3–4 unintroduced words as a preview (highlighted in the text),
+  and the day's grammar focus (weak spot, otherwise the current topic). Stories keep the profile's variety rules.
+- Tap a word → meaning (interface language), transliteration (per your setting), listen, and "Add to deck" (card is built from the stored gloss;
+  source `personal`, the story sentence is its example). "Known words %" counts words from cards you've started.
+- Audio uses browser `speechSynthesis` through `speak()` in `public/js/tts.js` (swap that function for a server voice later and cache its audio then).
+- The session generates the story in the background when it starts; "Report / rewrite" replaces it using your note.
+- Remember `npm run migrate:remote` after pushing (migration 0004).
 
 ## "I want to say…"
 `#/say`: describe a situation in Hebrew or English; the LLM adds 3–8 phrases/words as `personal` cards that come before the frequency list.

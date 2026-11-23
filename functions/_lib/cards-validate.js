@@ -55,3 +55,41 @@ export function normalizeTable(p, raw) {
   }
   return { title, data: { columns, rows, notes: bi(raw.notes) } };
 }
+
+// ---- Phase 4: stories ----
+const norm = (s) => String(s || '').normalize('NFC').replace(/[ً-ٰٟ]/g, '').replace(/[^\p{L}\p{N}]/gu, '').toLowerCase();
+export { norm };
+
+export function normalizeStory(p, raw) {
+  const title = raw?.title && str(raw.title.target) && str(raw.title.en) && str(raw.title.he) && HE_RE.test(raw.title.he)
+    ? { target: str(raw.title.target), en: str(raw.title.en), he: str(raw.title.he) } : null;
+  if (!title || !Array.isArray(raw.sentences)) return null;
+  const tr = p.transliteration?.enabled;
+  const sentences = raw.sentences.map((s) => {
+    const target = str(s?.target), en = str(s?.en), he = str(s?.he);
+    if (!target || !en || !he || !HE_RE.test(he)) return null;
+    if (SCRIPT_RE[p.script] && !SCRIPT_RE[p.script].test(target)) return null;
+    return { speaker: str(s.speaker), target, latin: tr ? str(s.translit_latin) : null, hebrew: tr ? str(s.translit_hebrew) : null, en, he, tokens: null };
+  }).filter(Boolean);
+  return sentences.length >= 3 ? { title, sentences } : null;
+}
+
+// Attach validated word tokens to sentences. Throws if too few sentences got usable tokens (so the call retries).
+export function applyGloss(p, raw, sentences) {
+  const tr = p.transliteration?.enabled;
+  let ok = 0;
+  for (const e of Array.isArray(raw?.sentences) ? raw.sentences : []) {
+    const s = sentences[e?.i];
+    if (!s || !Array.isArray(e.tokens)) continue;
+    const tokens = e.tokens.map((k) => {
+      const t = str(k?.t), en = str(k?.en), he = str(k?.he);
+      if (!t || !en || !he || !HE_RE.test(he)) return null;
+      return { t, b: str(k.b) || t, latin: tr ? str(k.latin) : null, hebrew: tr ? str(k.hebrew) : null, en, he };
+    });
+    if (tokens.some((x) => !x)) continue;
+    if (norm(tokens.map((x) => x.t).join('')) !== norm(s.target)) continue;     // tokens must reproduce the sentence
+    s.tokens = tokens; ok++;
+  }
+  if (ok < Math.ceil(sentences.length * 0.7)) throw new Error('word glosses incomplete');
+  return sentences;
+}

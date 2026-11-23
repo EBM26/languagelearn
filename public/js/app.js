@@ -2,6 +2,7 @@ import { h, clear } from './dom.js';
 import { loadStrings, t, getLang } from './i18n.js';
 import { S, boot, activeCodes, profile, setSetting, pickActive } from './settings.js';
 import { applyProfileStyle } from './card.js';
+import { stopSpeaking } from './tts.js';
 import { icon, select, segmented, toggle, field, alertEl } from './ui.js';
 import * as home from './views/home.js';
 import * as study from './views/study.js';
@@ -11,18 +12,21 @@ import * as say from './views/say.js';
 import * as deck from './views/deck.js';
 import * as reference from './views/reference.js';
 import * as stats from './views/stats.js';
+import * as story from './views/story.js';
+import * as stories from './views/stories.js';
 
-const routes = { home, study, alphabet, languages, say, deck, reference, stats };
+const routes = { home, study, alphabet, languages, say, deck, reference, stats, story, stories };
 // [route, label key, routes that highlight it, visible?]
 const NAV = [
-  ['home', 'nav_today', ['home', 'study', 'alphabet']],
+  ['home', 'nav_today', ['home', 'study', 'alphabet', 'story', 'stories']],
   ['say', 'say', ['say']],
   ['deck', 'deck', ['deck']],
   ['reference', 'reference', ['reference'], () => profile()?.grammar_topics?.length],
   ['stats', 'stats', ['stats']],
 ];
 let navOpen = false, settingsOpen = false;
-const current = () => (location.hash.replace(/^#\//, '') || 'home').split('?')[0];
+const segments = () => (location.hash.replace(/^#\//, '') || 'home').split('?')[0].split('/');
+const current = () => segments()[0];
 
 function settingsPanel(p) {
   const set = (key) => async (v) => { await setSetting(key, v); refresh(); };
@@ -57,11 +61,12 @@ function renderHeader() {
 }
 
 async function route() {
-  const view = routes[current()] || home;
+  stopSpeaking();                      // never keep talking after navigating away
+  const view = routes[current()] || home, args = segments().slice(1);
   const root = clear(document.getElementById('view'));
   if (profile()) applyProfileStyle(profile());
   root.append(h('p', { class: 'muted' }, t('loading')));
-  try { clear(root); await view.render(root); }
+  try { clear(root); await view.render(root, args); }
   catch (e) { clear(root).append(alertEl(`${t('error')}: ${e.message}`, h('button', { class: 'btn btn--secondary btn--sm', onclick: route }, t('retry')))); }
 }
 export function refresh() { renderHeader(); route(); }

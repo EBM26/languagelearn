@@ -21,6 +21,8 @@ export async function render(root) {
       h('div', { class: 'stats' }, stat(q.due.length, t('due')), stat(q.new.length, t('new')), stat(`${q.new_today}/${q.new_per_day}`, t('done_today'))),
       h('div', { class: 'cluster' },
         h('a', { class: 'btn', href: '#/study', onclick: () => { S.settings.active_profile = c; S.active = c; } }, t('start')),
+        h('a', { class: 'btn btn--secondary', href: '#/story', onclick: () => { S.settings.active_profile = c; S.active = c; } }, t('story_today')),
+        h('a', { class: 'btn btn--ghost', href: '#/stories', onclick: () => { S.settings.active_profile = c; S.active = c; } }, t('past_stories')),
         m && h('a', { class: 'btn btn--secondary', href: '#/alphabet', onclick: () => { S.settings.active_profile = c; S.active = c; } }, t('alphabet')))));
   }
   root.append(grid);

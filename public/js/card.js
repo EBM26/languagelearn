@@ -13,6 +13,8 @@ export function translitOf(card) {
   const m = translitMode();
   return m === 'latin' ? card.translit_latin : m === 'hebrew' ? card.translit_hebrew : null;
 }
+// Strip harakat for display when the user has diacritics turned off.
+export const plain = (text, p = profile()) => (p.diacritics && !diacriticsOn() ? text.replace(MARKS, '') : text);
 export const meaning = (c) => (S.settings.ui_lang === 'he' ? c.hebrew || c.english : c.english || c.hebrew);
 export const exampleMeaning = (c) => (S.settings.ui_lang === 'he' ? c.example_he || c.example_en : c.example_en || c.example_he);
 
