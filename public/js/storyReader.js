@@ -2,8 +2,8 @@ import { h, clear } from './dom.js';
 import { t, getLang } from './i18n.js';
 import { S, translitMode } from './settings.js';
 import { api } from './api.js';
-import { plain, targetEl } from './card.js';
-import { speak, speakSequence, stopSpeaking } from './tts.js';
+import { plain, targetEl, speakBtn } from './card.js';
+import { speakSequence, stopSpeaking } from './tts.js';
 import { icon, toggle, badge, alertEl } from './ui.js';
 
 const lang = (o) => (getLang() === 'he' ? o.he : o.en);
@@ -28,7 +28,7 @@ export function storyReader(story, p) {
     const el = h('div', { class: 'sentence' },
       s.speaker && h('div', { class: 'sentence__speaker' }, s.speaker),
       h('div', { class: 'sentence__main' },
-        h('button', { type: 'button', class: 'btn btn--secondary btn--sm btn--icon', 'aria-label': t('speak'), onclick: () => { stop(); speak(s.target, p); } }, '🔊'),
+        speakBtn(s.target, p, t('speak'), { before: stop }),
         h('div', { class: 'sentence__text', dir: p.direction, lang: p.speech?.whisper_lang || '' }, tokens)),
       translit && h('div', { class: 'sentence__translit' }, translit), trans);
     el._trans = trans;
@@ -56,7 +56,7 @@ export function storyReader(story, p) {
       catch (e) { add.disabled = false; status.replaceChildren(alertEl(e.message)); } } }, t('word_add'));
     clear(sheetSlot).append(h('div', { class: 'sheet', role: 'dialog' },
       h('div', { class: 'sheet__head' }, targetEl(plain(tk.b, p), p, 'lg'), h('span', { class: 'grow' }),
-        h('button', { type: 'button', class: 'btn btn--secondary btn--sm btn--icon', 'aria-label': t('speak'), onclick: () => speak(tk.b, p) }, '🔊'),
+        speakBtn(tk.b, p, t('speak')),
         h('button', { type: 'button', class: 'icon-btn', 'aria-label': t('close'), onclick: closeSheet }, icon('close'))),
       tr && h('div', { class: 'muted' }, tr), h('div', { class: 'prompt-main' }, lang(tk)),
       plain(tk.b, p) !== plain(tk.t, p) && h('div', { class: 'muted text-sm' }, `${t('base_form')}: ${plain(tk.b, p)}`),

@@ -36,6 +36,7 @@ function settingsPanel(p) {
     p?.transliteration?.enabled && field(t('translit'), segmented({ label: t('translit'), value: S.settings.translit, onChange: set('translit'),
       options: ['auto', 'latin', 'hebrew', 'off'].map((v) => ({ value: v, label: t('translit_' + v) })) })),
     p?.diacritics && toggle({ checked: S.settings.diacritics !== 'off', label: t('diacritics'), onChange: (on) => set('diacritics')(on ? 'on' : 'off') }),
+    toggle({ checked: S.settings.tts_slow === 'on', label: t('tts_slow'), onChange: (on) => set('tts_slow')(on ? 'on' : 'off') }),
     h('a', { class: 'popover__link', href: '#/languages' }, t('languages_menu')));
 }
 

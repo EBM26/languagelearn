@@ -1,6 +1,6 @@
 import { json, bad, readBody } from '../_lib/util.js';
 const ALLOWED = { ui_lang: ['he', 'en'], translit: ['auto', 'latin', 'hebrew', 'off'],
-  diacritics: ['on', 'off'], active_profile: null };
+  diacritics: ['on', 'off'], tts_slow: ['on', 'off'], active_profile: null };
 export async function onRequestPut({ request, env }) {
   const { key, value } = await readBody(request);
   if (!(key in ALLOWED)) return bad('unknown setting');

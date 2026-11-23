@@ -59,6 +59,8 @@
  "final": "Final",
  "no_connect": "Does not connect to the next letter",
  "connects": "Connects on both sides",
+ "tts_slow": "Slow audio",
+ "tts_no_voice": "No {lang} voice was found on this device, so audio buttons are hidden. Install one in your system settings (e.g. Accessibility > Spoken Content, or Language & Region) and reload.",
  "speak": "Listen",
  "module_progress": "Alphabet progress",
  "module_done": "Alphabet module complete 🎉",

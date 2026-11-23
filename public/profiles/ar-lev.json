@@ -77,10 +77,10 @@
   "speech": {
     "whisper_lang": "ar",
     "tts_voice_pref": [
-      "ar-PS",
       "ar-JO",
       "ar-LB",
-      "ar-SA",
+      "ar-SY",
+      "ar-PS",
       "ar"
     ]
   },

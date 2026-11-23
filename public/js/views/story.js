@@ -2,7 +2,7 @@ import { h, clear } from '../dom.js';
 import { t, getLang } from '../i18n.js';
 import { S, profile } from '../settings.js';
 import { api } from '../api.js';
-import { targetEl, plain } from '../card.js';
+import { targetEl, plain, speakBtn } from '../card.js';
 import { pageHead, alertEl } from '../ui.js';
 import { storyReader, storyMeta } from '../storyReader.js';
 
@@ -25,7 +25,7 @@ export async function render(root, args = []) {
       catch (e) { err.replaceChildren(alertEl(e.message)); regen.disabled = false; } } }, t('regenerate_story'));
     const done = h('button', { class: 'btn', disabled: !!st.read_at, onclick: async () => { await api.post(`/api/stories/${st.id}/read`); done.disabled = true; } }, t('finished'));
     body.append(
-      h('div', { class: 'stack' }, h('div', { class: 'cluster' }, targetEl(plain(st.title.target, p), p, 'lg'), h('span', { class: 'muted' }, st.title[getLang()] ?? st.title.en)),
+      h('div', { class: 'stack' }, h('div', { class: 'cluster' }, targetEl(plain(st.title.target, p), p, 'lg'), speakBtn(st.title.target, p, t('speak')), h('span', { class: 'muted' }, st.title[getLang()] ?? st.title.en)),
         storyMeta(st), st.grammar_focus && h('p', { class: 'muted text-sm' }, `${t('grammar_focus_label')}: ${st.grammar_focus.topic}${st.grammar_focus.focus ? ` — ${st.grammar_focus.focus}` : ''}`)),
       err, reader, h('div', { class: 'cluster' }, done, regen));
   };

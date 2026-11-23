@@ -2,7 +2,7 @@ import { h, clear } from '../dom.js';
 import { t, getLang } from '../i18n.js';
 import { S, profile, translitMode } from '../settings.js';
 import { api } from '../api.js';
-import { targetEl } from '../card.js';
+import { targetEl, speakBtn } from '../card.js';
 import { pageHead, badge, alertEl } from '../ui.js';
 
 export const topicLabel = (p, slug) => p.grammar_topic_labels?.[slug]?.[getLang()] ?? slug.replace(/-/g, ' ');
@@ -61,7 +61,7 @@ export async function render(root) {
 function tableEl(p, tb, reload) {
   const cell = (c) => {
     if (c.t) { const m = translitMode(p), x = m === 'latin' ? c.latin : m === 'hebrew' ? c.hebrew : null;
-      return h('td', {}, targetEl(c.t, p), x && h('div', { class: 'muted text-sm' }, x)); }
+      return h('td', {}, h('span', { class: 'cluster' }, targetEl(c.t, p), speakBtn(c.t, p, t('speak'))), x && h('div', { class: 'muted text-sm' }, x)); }
     return h('td', {}, L(c));
   };
   const err = h('div', {});

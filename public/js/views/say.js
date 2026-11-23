@@ -2,7 +2,7 @@ import { h, clear } from '../dom.js';
 import { t } from '../i18n.js';
 import { S, profile } from '../settings.js';
 import { api } from '../api.js';
-import { targetEl, meaning } from '../card.js';
+import { targetEl, meaning, speakBtn } from '../card.js';
 import { pageHead, statusBadge, alertEl } from '../ui.js';
 
 export async function render(root) {
@@ -34,7 +34,7 @@ export async function render(root) {
     for (const r of requests) list.append(h('section', { class: 'card stack' },
       h('div', { class: 'cluster' }, h('strong', { class: 'grow' }, r.request_text), statusBadge(r.status, t('status_' + r.status))),
       r.status === 'failed' && alertEl(r.error || t('error'), h('button', { class: 'btn btn--secondary btn--sm', onclick: () => send({ retry_id: r.id }) }, t('retry'))),
-      r.cards.length > 0 && h('ul', { class: 'bullets' }, r.cards.map((c) => h('li', {}, targetEl(c.target_text, p), ' — ', meaning(c))))));
+      r.cards.length > 0 && h('ul', { class: 'bullets' }, r.cards.map((c) => h('li', {}, h('span', { class: 'cluster' }, targetEl(c.target_text, p), speakBtn(c.target_text, p, t('speak'))), ' — ', meaning(c))))));
   }
   root.append(pageHead(t('say_title'), t('say_hint')), h('div', { class: 'measure stack-lg' },
     h('div', { class: 'stack' }, input, h('div', { class: 'cluster' }, submit), feedback), list));

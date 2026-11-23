@@ -63,7 +63,7 @@ export async function render(root) {
           h('div', { class: 'cluster' }, targetEl(shown(c, p), p, 'xl'), speakBtn(c.target_text, p, t('speak'))),
           tr && h('div', { class: 'text-lg' }, tr), h('div', { class: 'prompt-main' }, meaning(c)),
           c.cognate_hint && h('p', { class: 'muted' }, `${t('cognate')}: ${c.cognate_hint}`),
-          c.example_target && h('div', { class: 'muted' }, targetEl(c.example_target, p), ex && h('div', { class: 'text-sm' }, ex)),
+          c.example_target && h('div', { class: 'muted' }, h('span', { class: 'cluster' }, targetEl(c.example_target, p), speakBtn(c.example_target, p, t('speak'))), ex && h('div', { class: 'text-sm' }, ex)),
           h('button', { class: 'btn', onclick: () => { done++; next(); } }, t('intro_next'))));
       }
 
@@ -79,7 +79,7 @@ export async function render(root) {
           dir === 'recognize' ? h('div', { class: 'stack' }, tr && h('div', { class: 'text-lg' }, tr), h('div', { class: 'prompt-main' }, mean))
             : h('div', { class: 'stack' }, targetBlock, tr && h('div', { class: 'muted' }, tr)),
           c.cognate_hint && h('p', { class: 'muted text-sm' }, `${t('cognate')}: ${c.cognate_hint}`),
-          c.example_target && h('div', { class: 'muted' }, targetEl(c.example_target, p), ex && h('div', { class: 'text-sm' }, ex)));
+          c.example_target && h('div', { class: 'muted' }, h('span', { class: 'cluster' }, targetEl(c.example_target, p), speakBtn(c.example_target, p, t('speak'))), ex && h('div', { class: 'text-sm' }, ex)));
         const grades = h('div', { class: 'grades hidden' },
           [['1', 'again'], ['2', 'hard'], ['3', 'good'], ['4', 'easy']].map(([g, k]) => h('button', { class: 'g' + g, onclick: async () => {
             grades.querySelectorAll('button').forEach((b) => (b.disabled = true));

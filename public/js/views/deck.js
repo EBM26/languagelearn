@@ -2,7 +2,7 @@ import { h, clear } from '../dom.js';
 import { t, getLang } from '../i18n.js';
 import { S, profile } from '../settings.js';
 import { api } from '../api.js';
-import { targetEl, meaning } from '../card.js';
+import { targetEl, meaning, speakBtn } from '../card.js';
 import { pageHead, field, badge, select, toggle, alertEl } from '../ui.js';
 
 const FIELDS = ['target_text', 'translit_latin', 'translit_hebrew', 'english', 'hebrew', 'cognate_hint', 'example_target', 'example_en', 'example_he'];
@@ -37,7 +37,7 @@ export async function render(root) {
     const box = h('div', { class: 'card stack' });
     const view = () => {
       clear(box).append(h('div', { class: 'deck-row' },
-        h('div', { class: 'grow' }, targetEl(c.target_text, p), h('div', { class: 'muted text-sm' }, meaning(c))),
+        h('div', { class: 'grow' }, h('span', { class: 'cluster' }, targetEl(c.target_text, p), speakBtn(c.target_text, p, t('speak'))), h('div', { class: 'muted text-sm' }, meaning(c))),
         badge(c.source, 'info'), c.flagged ? badge('⚑ ' + t('flagged'), 'warning') : null,
         h('button', { class: 'btn btn--secondary btn--sm', onclick: edit }, t('edit'))));
       if (c.flagged && c.flag_note) box.append(h('p', { class: 'muted text-sm' }, c.flag_note));
