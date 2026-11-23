@@ -5,6 +5,13 @@ Language behavior lives in `public/profiles/*.json`, not in code. Full spec: `la
 
 **Status: Phase 3** (Phases 1–2 + grammar drills, reference page, weak-spot tracking).
 
+## Front-end design system
+- `public/app.css` is the only stylesheet. Colours, spacing, radii, shadows, type scale and widths are CSS variables on `:root`; change them there.
+  The page is a 1200px centred container (header included); focused flows use a 760px reading measure. Logical properties are used throughout so Hebrew RTL mirrors correctly.
+- `public/js/ui.js` holds the shared components: custom `select`, `segmented`, `toggle`, `badge`/`statusBadge`, `alertEl` (the single way to show an error), `field`, `pageHead`.
+- Target-language text uses `targetEl(text, profile, 'md'|'lg'|'xl')`; sizes derive from the profile's `font.size`.
+- Interface language, transliteration and diacritics live in the settings popover (sliders icon in the header). The Stats page is a placeholder until Phase 6.
+
 ## Layout
 - `public/` static app (`js/`, `strings/{en,he}.json`, `profiles/`, `data/arabic-alphabet.json`)
 - `functions/` Pages Functions (`api/*`, `_lib/fsrs.js`, `_lib/llm.js` stub for Phase 2)

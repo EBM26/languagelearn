@@ -169,5 +169,13 @@
  "axis_case": "case",
  "axis_topic": "topic",
  "no_grammar": "This language has no grammar topics yet.",
- "tables_failed": "Tables could not be generated"
+ "tables_failed": "Tables could not be generated",
+ "nav_today": "Today",
+ "stats": "Stats",
+ "settings": "Settings",
+ "menu": "Menu",
+ "stats_title": "Stats",
+ "stats_soon": "Streaks, minutes per day, retention and weak areas arrive in a later phase. Your reviews are already being logged for it.",
+ "languages_menu": "Manage languages",
+ "cancel": "Cancel"
 }

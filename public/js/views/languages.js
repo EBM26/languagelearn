@@ -1,22 +1,23 @@
-import { h, clear } from '../dom.js';
+import { h } from '../dom.js';
 import { t, getLang } from '../i18n.js';
 import { S, setProfileActive } from '../settings.js';
 import { api } from '../api.js';
 import { runSeed } from '../seed.js';
 import { refresh } from '../app.js';
+import { pageHead, field, badge, alertEl } from '../ui.js';
 
 export async function render(root) {
-  root.append(h('h1', {}, t('manage')));
+  root.append(pageHead(t('manage')));
+  const grid = h('div', { class: 'grid-cards' });
+  root.append(grid);
   for (const c of S.codes) {
     const p = S.profiles[c], st = S.states[c], on = !!st?.active;
-    const num = h('input', { type: 'number', min: 0, max: 50, value: st?.new_per_day ?? p.new_per_day_default ?? 7 });
-    const seedBox = h('div', {});
-    root.append(h('div', { class: 'card-box' },
-      h('div', { class: 'row' }, h('h2', { style: 'margin:0;flex:1' }, p.names[getLang()]),
-        h('span', { class: 'badge' + (on ? ' on' : '') }, on ? t('active') : t('inactive'))),
-      h('div', { class: 'row', style: 'margin-top:.6rem' },
-        h('label', {}, t('new_per_day') + ' ', num),
-        h('button', { class: 'btn small' + (on ? ' secondary' : ''), onclick: async () => {
+    const num = h('input', { class: 'input input--num', type: 'number', min: 0, max: 50, 'aria-label': t('new_per_day'), value: st?.new_per_day ?? p.new_per_day_default ?? 7 });
+    const seedBox = h('div', { class: 'stack' });
+    grid.append(h('section', { class: 'card stack' },
+      h('div', { class: 'cluster' }, h('h2', { class: 'grow' }, p.names[getLang()]), badge(on ? t('active') : t('inactive'), on ? 'success' : 'neutral')),
+      h('div', { class: 'cluster' }, field(t('new_per_day'), num),
+        h('button', { class: 'btn btn--sm' + (on ? ' btn--secondary' : ''), style: 'align-self:flex-end', onclick: async () => {
           await setProfileActive(c, !on, parseInt(num.value, 10));
           if (!on && p.seed?.enabled) sessionStorage.setItem('autoseed', c);   // activation triggers seeding
           refresh(); } }, on ? t('deactivate') : t('activate'))),
@@ -26,23 +27,23 @@ export async function render(root) {
 }
 
 async function seedUi(box, code, p) {
-  if (!p.seed?.enabled) { box.append(h('p', { class: 'muted' }, t('seed_off'))); return; }
+  if (!p.seed?.enabled) { box.append(h('p', { class: 'muted text-sm' }, t('seed_off'))); return; }
   const s = await api.get(`/api/seed/status?profile=${code}`);
-  const bar = h('div', { style: 'height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:.5rem 0' }, h('div', { style: 'height:100%;background:var(--accent);width:0' }));
-  const label = h('p', { class: 'muted' }), err = h('p', { class: 'err' });
-  const set = (n, total) => { label.textContent = t('seed_status', { n, total }); bar.firstChild.style.width = `${Math.min(100, (n / total) * 100)}%`; };
-  set(s.generated, s.target);
-  const btn = h('button', { class: 'btn small' }, s.generated ? t('continue_seed') : t('generate_seed'));
+  const fill = h('div', {}), label = h('p', { class: 'muted text-sm' }), errBox = h('div', {});
+  const set = (n, total, text) => { label.textContent = text(n, total); fill.style.width = `${Math.min(100, (n / total) * 100)}%`; };
+  const idle = (n, total) => (n >= total ? t('seed_done') : t('seed_status', { n, total }));
+  set(s.generated, s.target, idle);
+  const btn = h('button', { class: 'btn btn--sm' }, s.generated ? t('continue_seed') : t('generate_seed'));
   const go = async () => {
-    btn.disabled = true; err.textContent = '';
+    btn.disabled = true; clear(errBox);
     try {
-      await runSeed(code, (r) => { label.textContent = t('seed_running', { n: r.generated, total: r.target });
-        bar.firstChild.style.width = `${Math.min(100, (r.generated / r.target) * 100)}%`; });
+      await runSeed(code, (r) => set(r.generated, r.target, (n, total) => t('seed_running', { n, total })));
       label.textContent = t('seed_done');
-    } catch (e) { err.textContent = e.message === 'stalled' ? t('seed_stalled') : `${t('error')}: ${e.message}`; btn.disabled = false; }
+    } catch (e) { errBox.replaceChildren(alertEl(e.message === 'stalled' ? t('seed_stalled') : `${t('error')}: ${e.message}`)); btn.disabled = false; }
   };
+  const clear = (el) => el.replaceChildren();
   btn.onclick = go;
-  box.append(label, bar, s.generated >= s.target ? '' : btn, err,
-    h('a', { href: '#/deck', class: 'btn secondary small', style: 'margin-inline-start:.5rem' }, t('deck')));
+  box.append(label, h('div', { class: 'meter' }, fill), errBox,
+    h('div', { class: 'cluster' }, s.generated >= s.target ? null : btn, h('a', { href: '#/deck', class: 'btn btn--secondary btn--sm' }, t('deck'))));
   if (sessionStorage.getItem('autoseed') === code && s.generated < s.target) { sessionStorage.removeItem('autoseed'); go(); }
 }

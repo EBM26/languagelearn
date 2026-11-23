@@ -17,14 +17,18 @@ export const meaning = (c) => (S.settings.ui_lang === 'he' ? c.hebrew || c.engli
 export const exampleMeaning = (c) => (S.settings.ui_lang === 'he' ? c.example_he || c.example_en : c.example_en || c.example_he);
 
 // A span that always uses the profile's own direction and font, regardless of interface language.
-export function targetEl(text, p = profile(), big = false) {
-  return h('span', { class: 'target' + (big ? ' big' : ''), dir: p.direction, lang: p.speech?.whisper_lang || '', text });
+// size: 'md' (lists, tables) | 'lg' (answers) | 'xl' (hero). `true` is kept as an alias for 'xl'.
+export function targetEl(text, p = profile(), size = 'md') {
+  const s = size === true ? 'xl' : size || 'md';
+  return h('span', { class: 'target' + (s === 'md' ? '' : ' target--' + s), dir: p.direction, lang: p.speech?.whisper_lang || '', text });
 }
 export function applyProfileStyle(p) {
   const r = document.documentElement.style;
-  r.setProperty('--target-font', p.font.family); r.setProperty('--target-size', p.font.size);
+  r.setProperty('--target-font', p.font.family);
+  r.setProperty('--target-lg', p.font.size);                              // profile size = the 'lg' step
+  r.setProperty('--target-md', `calc(${p.font.size} * 0.7)`); r.setProperty('--target-xl', `calc(${p.font.size} * 1.5)`);
   if (p.font.url && !document.querySelector(`link[href="${p.font.url}"]`))
     document.head.append(h('link', { rel: 'stylesheet', href: p.font.url }));
 }
-export const speakBtn = (text, p, label) => h('button', { class: 'btn secondary small', type: 'button', 'aria-label': label,
+export const speakBtn = (text, p, label) => h('button', { class: 'btn btn--secondary btn--sm', type: 'button', 'aria-label': label,
   onclick: () => speak(text, p) }, '🔊');

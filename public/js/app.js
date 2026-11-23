@@ -2,6 +2,7 @@ import { h, clear } from './dom.js';
 import { loadStrings, t, getLang } from './i18n.js';
 import { S, boot, activeCodes, profile, setSetting, pickActive } from './settings.js';
 import { applyProfileStyle } from './card.js';
+import { icon, select, segmented, toggle, field, alertEl } from './ui.js';
 import * as home from './views/home.js';
 import * as study from './views/study.js';
 import * as alphabet from './views/alphabet.js';
@@ -9,45 +10,76 @@ import * as languages from './views/languages.js';
 import * as say from './views/say.js';
 import * as deck from './views/deck.js';
 import * as reference from './views/reference.js';
+import * as stats from './views/stats.js';
 
-const routes = { home, study, alphabet, languages, say, deck, reference };
+const routes = { home, study, alphabet, languages, say, deck, reference, stats };
+// [route, label key, routes that highlight it, visible?]
+const NAV = [
+  ['home', 'nav_today', ['home', 'study', 'alphabet']],
+  ['say', 'say', ['say']],
+  ['deck', 'deck', ['deck']],
+  ['reference', 'reference', ['reference'], () => profile()?.grammar_topics?.length],
+  ['stats', 'stats', ['stats']],
+];
+let navOpen = false, settingsOpen = false;
+const current = () => (location.hash.replace(/^#\//, '') || 'home').split('?')[0];
+
+function settingsPanel(p) {
+  const set = (key) => async (v) => { await setSetting(key, v); refresh(); };
+  return h('div', { class: 'popover', role: 'dialog', 'aria-label': t('settings') },
+    field(t('interface_lang'), segmented({ label: t('interface_lang'), value: S.settings.ui_lang, onChange: set('ui_lang'),
+      options: [{ value: 'he', label: 'עברית' }, { value: 'en', label: 'English' }] })),
+    p?.transliteration?.enabled && field(t('translit'), segmented({ label: t('translit'), value: S.settings.translit, onChange: set('translit'),
+      options: ['auto', 'latin', 'hebrew', 'off'].map((v) => ({ value: v, label: t('translit_' + v) })) })),
+    p?.diacritics && toggle({ checked: S.settings.diacritics !== 'off', label: t('diacritics'), onChange: (on) => set('diacritics')(on ? 'on' : 'off') }),
+    h('a', { class: 'popover__link', href: '#/languages' }, t('languages_menu')));
+}
 
 function renderHeader() {
   const el = clear(document.getElementById('header'));
-  const p = profile();
-  el.append(h('a', { class: 'brand', href: '#/home' }, t('app')));
-  if (p) el.append(h('a', { href: '#/say' }, t('say')), h('a', { href: '#/deck' }, t('deck')),
-    p.grammar_topics?.length && h('a', { href: '#/reference' }, t('reference')));
-  const act = activeCodes();
-  if (act.length) el.append(h('label', {}, t('active_lang'),
-    h('select', { onchange: async (e) => { await setSetting('active_profile', e.target.value); pickActive(); refresh(); } },
-      act.map((c) => h('option', { value: c, selected: c === S.active }, S.profiles[c].names[getLang()])))));
-  el.append(h('label', {}, t('interface_lang'),
-    h('select', { onchange: async (e) => { await setSetting('ui_lang', e.target.value); refresh(); } },
-      [['he', 'עברית'], ['en', 'English']].map(([v, n]) => h('option', { value: v, selected: v === S.settings.ui_lang }, n)))));
-  if (p?.transliteration?.enabled) el.append(h('label', {}, t('translit'),
-    h('select', { onchange: async (e) => { await setSetting('translit', e.target.value); refresh(); } },
-      ['auto', 'latin', 'hebrew', 'off'].map((v) => h('option', { value: v, selected: v === S.settings.translit }, t('translit_' + v))))));
-  if (p?.diacritics) el.append(h('label', {}, h('input', { type: 'checkbox', checked: S.settings.diacritics !== 'off',
-    onchange: async (e) => { await setSetting('diacritics', e.target.checked ? 'on' : 'off'); refresh(); } }), t('diacritics')));
+  const p = profile(), cur = current(), act = activeCodes();
+  const nav = h('nav', { class: 'nav' + (navOpen ? ' open' : ''), id: 'main-nav', 'aria-label': 'Main' },
+    NAV.filter((n) => !n[3] || n[3]()).map(([route, key, owns]) =>
+      h('a', { href: `#/${route}`, 'aria-current': owns.includes(cur) ? 'page' : null }, t(key))));
+  const langPill = act.length && select({ variant: 'pill', label: t('active_lang'), value: S.active,
+    options: act.map((c) => ({ value: c, label: S.profiles[c].names[getLang()] })),
+    footer: [{ label: t('languages_menu'), onClick: () => { location.hash = '#/languages'; } }],
+    onChange: async (c) => { await setSetting('active_profile', c); pickActive(); refresh(); } });
+  const gear = h('div', { class: 'settings' },
+    h('button', { type: 'button', class: 'icon-btn', 'aria-label': t('settings'), 'aria-expanded': String(settingsOpen),
+      onclick: () => { settingsOpen = !settingsOpen; navOpen = false; renderHeader(); } }, icon('sliders')),
+    settingsOpen && settingsPanel(p));
+  const burger = h('button', { type: 'button', class: 'icon-btn nav-toggle', 'aria-label': t('menu'), 'aria-expanded': String(navOpen), 'aria-controls': 'main-nav',
+    onclick: () => { navOpen = !navOpen; settingsOpen = false; renderHeader(); } }, icon(navOpen ? 'close' : 'menu'));
+  el.append(h('div', { class: 'container header__inner' },
+    h('a', { class: 'brand', href: '#/home' }, t('app')), nav,
+    h('div', { class: 'header__actions' }, langPill, gear, burger)));
 }
 
 async function route() {
-  const name = (location.hash.replace(/^#\//, '') || 'home').split('?')[0];
-  const view = routes[name] || home;
+  const view = routes[current()] || home;
   const root = clear(document.getElementById('view'));
   if (profile()) applyProfileStyle(profile());
   root.append(h('p', { class: 'muted' }, t('loading')));
   try { clear(root); await view.render(root); }
-  catch (e) { clear(root).append(h('p', { class: 'err' }, `${t('error')}: ${e.message}`),
-    h('button', { class: 'btn secondary', onclick: route }, t('retry'))); }
+  catch (e) { clear(root).append(alertEl(`${t('error')}: ${e.message}`, h('button', { class: 'btn btn--secondary btn--sm', onclick: route }, t('retry')))); }
 }
 export function refresh() { renderHeader(); route(); }
 
-window.addEventListener('hashchange', route);
+// Close popovers on outside click / Escape.
+document.addEventListener('click', (e) => {
+  let changed = false;
+  if (settingsOpen && !e.target.closest('.settings')) { settingsOpen = false; changed = true; }
+  if (navOpen && !e.target.closest('.nav, .nav-toggle')) { navOpen = false; changed = true; }
+  if (changed) renderHeader();
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && (settingsOpen || navOpen)) { settingsOpen = navOpen = false; renderHeader(); } });
+window.addEventListener('hashchange', () => { navOpen = settingsOpen = false; renderHeader(); route(); });
+
 (async () => {
   await loadStrings();
-  try { await boot(); } catch (e) { document.getElementById('view').textContent = `${t('error')}: ${e.message}`; return; }
+  try { await boot(); }
+  catch (e) { document.getElementById('view').append(alertEl(`${t('error')}: ${e.message}`)); return; }
   document.title = t('app');
   refresh();
 })();

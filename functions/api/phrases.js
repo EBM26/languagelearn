@@ -49,6 +49,6 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: true, id, added: inserted, total: items.length });
   } catch (e) {
     await env.DB.prepare(`UPDATE phrase_requests SET status='failed', error=?2 WHERE id=?1`).bind(id, String(e.message).slice(0, 300)).run();
-    return bad(`could not build phrases: ${e.message}`, 502);
+    return json({ error: `could not build phrases: ${e.message}`, id }, 502);
   }
 }
