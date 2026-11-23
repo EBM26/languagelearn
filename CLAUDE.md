@@ -1,0 +1,1 @@
+- Never change database_id or database_name in wrangler.toml. They are set by me and already correct.
