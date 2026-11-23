@@ -6,10 +6,14 @@ const dflt = (v, d) => (v ?? d);
 // GET  ?profile=  -> script-module progress
 // POST {profile, action:'init'}  -> idempotently create the module's cards (profile-driven)
 // POST {profile, action:'check', score, total} -> record a reading check; complete on pass
+// `module=pronunciation` (Italian/German) works the same way but has no cards: just a progress row and a reading-aloud check.
+const moduleOf = (v) => (v === 'pronunciation' ? 'pronunciation' : 'script');
 export async function onRequestGet({ request, env }) {
   const profile = new URL(request.url).searchParams.get('profile');
+  const mod = moduleOf(new URL(request.url).searchParams.get('module'));
   const row = await env.DB.prepare('SELECT * FROM module_progress WHERE profile = ? AND module = ?')
-    .bind(profile, 'script').first();
+    .bind(profile, mod).first();
+  if (mod === 'pronunciation') return json({ completed_at: row?.completed_at ?? null, data: row ? JSON.parse(row.data) : {}, counts: [] });
   const counts = (await env.DB.prepare(
     `SELECT c.type, COUNT(*) AS total, SUM(r.card_id IS NOT NULL) AS started
        FROM cards c LEFT JOIN review_state r ON r.card_id = c.id AND r.direction = c.direction
@@ -22,10 +26,12 @@ export async function onRequestPost({ request, env }) {
   const body = await readBody(request);
   const profile = await loadProfile(env, request, body.profile);
   if (!profile) return bad('unknown profile', 404);
-  const cfg = profile.script_module;
-  if (!cfg?.enabled) return bad('profile has no script module');
+  const mod = moduleOf(body.module);
+  const cfg = profile[mod + '_module'];
+  if (!cfg?.enabled) return bad(`profile has no ${mod} module`);
 
   if (body.action === 'init') {
+    if (mod !== 'script') return bad('nothing to initialise');
     const data = await loadAsset(env, request, cfg.data);
     if (!data) return bad('missing module data', 500);
     const stmts = buildCards(profile.code, data).map((c) => env.DB.prepare(
@@ -45,13 +51,13 @@ export async function onRequestPost({ request, env }) {
     if (!Number.isInteger(score) || !Number.isInteger(total) || total < 1 || score < 0 || score > total)
       return bad('bad score');
     const row = await env.DB.prepare('SELECT * FROM module_progress WHERE profile = ? AND module = ?')
-      .bind(profile.code, 'script').first();
+      .bind(profile.code, mod).first();
     const data = row ? JSON.parse(row.data) : {};
     data.checks = [...dflt(data.checks, []), { at: new Date().toISOString(), score, total }].slice(-20);
-    const passed = total >= (cfg.check_words ?? 20) && score / total >= (cfg.pass_threshold ?? 0.9);
-    await env.DB.prepare(`INSERT INTO module_progress (profile, module, data, completed_at) VALUES (?1,'script',?2,?3)
+    const passed = total >= (cfg.check_words ?? cfg.check_items ?? 20) && score / total >= (cfg.pass_threshold ?? 0.9);
+    await env.DB.prepare(`INSERT INTO module_progress (profile, module, data, completed_at) VALUES (?1,?4,?2,?3)
         ON CONFLICT(profile, module) DO UPDATE SET data = ?2, completed_at = COALESCE(module_progress.completed_at, ?3)`)
-      .bind(profile.code, JSON.stringify(data), passed ? new Date().toISOString() : null).run();
+      .bind(profile.code, JSON.stringify(data), passed ? new Date().toISOString() : null, mod).run();
     return json({ passed });
   }
   return bad('unknown action');

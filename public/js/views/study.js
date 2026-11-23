@@ -5,6 +5,7 @@ import { api } from '../api.js';
 import { shown, translitOf, meaning, exampleMeaning, targetEl, speakBtn } from '../card.js';
 import { pageHead, field, badge, alertEl } from '../ui.js';
 import { storyReader, storyMeta } from '../storyReader.js';
+import { talkUI } from './talk.js';
 
 const PAUSE_NEW_ABOVE = 100;   // too many reviews due -> hold back new items
 
@@ -40,7 +41,7 @@ export async function render(root) {
   }
 
   async function session(due, fresh) {
-    let total = due.length + fresh.length * 2 + 1, done = 0, reviewed = 0;
+    let total = due.length + fresh.length * 2 + 2, done = 0, reviewed = 0;
     // Start writing today's story now so it's ready when we get to that step (errors surface at the step).
     const storyReq = api.post('/api/story/today', { profile: code }).then((v) => ({ v }), (e) => ({ e }));
     const bar = h('div', {}), title = h('h2', {}), body = h('div', {});
@@ -116,7 +117,7 @@ export async function render(root) {
     }
     // Story step: read it inline (skippable)
     title.textContent = t('story_step'); clear(body).append(h('p', { class: 'muted' }, t('story_generating')));
-    const res = await storyReq;
+    const res = await storyReq; const storyT0 = Date.now();
     await new Promise((resolve) => {
       skip.onclick = () => { reader?.dispose(); resolve(); };
       let reader = null;
@@ -124,9 +125,12 @@ export async function render(root) {
         return clear(body).append(alertEl(`${t('story_unavailable')}: ${res.e.message}`, h('button', { class: 'btn btn--secondary btn--sm', onclick: () => { skip.classList.remove('hidden'); resolve(); } }, t('continue')))); }
       reader = storyReader(res.v, p);
       clear(body).append(h('div', { class: 'stack' }, h('div', { class: 'cluster' }, targetEl(res.v.title.target, p, 'lg')), storyMeta(res.v), reader,
-        h('div', {}, h('button', { class: 'btn', onclick: async () => { await api.post(`/api/stories/${res.v.id}/read`).catch(() => {}); reader.dispose(); resolve(); } }, t('finished')))));
+        h('div', {}, h('button', { class: 'btn', onclick: async () => { await api.post(`/api/stories/${res.v.id}/read`, { ms: Date.now() - storyT0 }).catch(() => {}); reader.dispose(); resolve(); } }, t('finished')))));
     });
     skip.classList.remove('hidden'); done++; progress();
+    // Speaking step: a short voice conversation, then corrections (which become review cards).
+    title.textContent = t('speaking_step');
+    await new Promise((resolve) => { skip.onclick = resolve; clear(body).append(talkUI(p, { onFinished: resolve })); });
     bar.style.width = '100%';
     clear(stage).append(h('div', { class: 'card study-card' }, h('h2', {}, t('session_done')),
       h('p', { class: 'muted' }, `${reviewed} ${t('reviewed')}. ${t('session_done_sub')}`),

@@ -7,6 +7,10 @@ binding = "DB"
 database_name = "language-app-db"
 database_id = "81c0d4ee-6028-4222-91b7-001ea654a289"   # replace with the real id from `wrangler d1 list`
 
+# Workers AI, used for speech-to-text (Whisper) in speaking practice. No key needed; billed to your account.
+[ai]
+binding = "AI"
+
 # LLM adapter config. The API key is a secret, set in the Pages dashboard (never committed): LLM_API_KEY.
 [vars]
 LLM_PROVIDER = "gemini"                      # gemini | anthropic | openai | mock

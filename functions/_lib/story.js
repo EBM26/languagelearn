@@ -17,7 +17,7 @@ async function deckSet(env, code) {
   const rows = (await env.DB.prepare(`SELECT target_text FROM cards WHERE profile = ? AND type IN ('word','phrase')`).bind(code).all()).results;
   return new Set(rows.flatMap((r) => [norm(r.target_text), ...r.target_text.split(/\s+/).map(norm)]));
 }
-const recentWords = async (env, code) => (await env.DB.prepare(
+export const recentWords = async (env, code) => (await env.DB.prepare(
   `SELECT c.target_text FROM cards c ${WORD_JOIN} WHERE c.profile = ? AND c.type = 'word' ORDER BY r.last_review DESC LIMIT 120`).bind(code).all()).results.map((r) => r.target_text);
 // Preview: the next unintroduced words in queue order.
 const previewWords = async (env, code) => (await env.DB.prepare(

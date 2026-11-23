@@ -1,0 +1,300 @@
+{
+ "topics": [
+  {
+   "id": "c/ch/ci",
+   "title": {
+    "en": "c / ch / ci",
+    "he": "c / ch / ci"
+   },
+   "rule": {
+    "en": "C is a hard K before a, o, u (casa). Before e or i it is a soft CH as in 'church' (cena). Adding h (ch) keeps it hard before e/i (che, chi).",
+    "he": "לפני a, o, u האות c נשמעת כמו ק (casa). לפני e או i היא נשמעת כמו צ' (cena). הוספת h (ch) שומרת על צליל ק לפני e/i (che, chi)."
+   },
+   "items": [
+    {
+     "text": "casa",
+     "en": "house",
+     "he": "בית"
+    },
+    {
+     "text": "cena",
+     "en": "dinner",
+     "he": "ארוחת ערב"
+    },
+    {
+     "text": "che",
+     "en": "what",
+     "he": "מה"
+    },
+    {
+     "text": "chi",
+     "en": "who",
+     "he": "מי"
+    },
+    {
+     "text": "ciao",
+     "en": "hi / bye",
+     "he": "שלום"
+    },
+    {
+     "text": "amici",
+     "en": "friends",
+     "he": "חברים"
+    }
+   ]
+  },
+  {
+   "id": "g/gh/gi",
+   "title": {
+    "en": "g / gh / gi",
+    "he": "g / gh / gi"
+   },
+   "rule": {
+    "en": "G is hard before a, o, u (gatto). Before e or i it is a soft J as in 'jam' (gelato). gh keeps it hard before e/i (spaghetti).",
+    "he": "לפני a, o, u האות g קשה כמו ג (gatto). לפני e או i היא נשמעת כמו ג' (gelato). gh שומרת על צליל קשה לפני e/i (spaghetti)."
+   },
+   "items": [
+    {
+     "text": "gatto",
+     "en": "cat",
+     "he": "חתול"
+    },
+    {
+     "text": "gelato",
+     "en": "ice cream",
+     "he": "גלידה"
+    },
+    {
+     "text": "giorno",
+     "en": "day",
+     "he": "יום"
+    },
+    {
+     "text": "spaghetti",
+     "en": "spaghetti",
+     "he": "ספגטי"
+    },
+    {
+     "text": "ghiaccio",
+     "en": "ice",
+     "he": "קרח"
+    },
+    {
+     "text": "giovane",
+     "en": "young",
+     "he": "צעיר"
+    }
+   ]
+  },
+  {
+   "id": "gli",
+   "title": {
+    "en": "gli",
+    "he": "gli"
+   },
+   "rule": {
+    "en": "'gli' sounds like 'lli' in 'million': a soft palatal L. (In figlio the g is silent.)",
+    "he": "gli נשמעת כמו 'לי' רכה וארוכה, בדומה ל-lli במילה million. ב-figlio ה-g אינה נשמעת."
+   },
+   "items": [
+    {
+     "text": "figlio",
+     "en": "son",
+     "he": "בן"
+    },
+    {
+     "text": "famiglia",
+     "en": "family",
+     "he": "משפחה"
+    },
+    {
+     "text": "aglio",
+     "en": "garlic",
+     "he": "שום"
+    },
+    {
+     "text": "foglio",
+     "en": "sheet of paper",
+     "he": "דף"
+    },
+    {
+     "text": "meglio",
+     "en": "better",
+     "he": "טוב יותר"
+    }
+   ]
+  },
+  {
+   "id": "gn",
+   "title": {
+    "en": "gn",
+    "he": "gn"
+   },
+   "rule": {
+    "en": "'gn' sounds like 'ny' in 'canyon', one soft nasal sound.",
+    "he": "gn נשמעת כמו 'ני' רכה, כמו ny במילה canyon."
+   },
+   "items": [
+    {
+     "text": "gnocchi",
+     "en": "gnocchi",
+     "he": "ניוקי"
+    },
+    {
+     "text": "lasagna",
+     "en": "lasagna",
+     "he": "לזניה"
+    },
+    {
+     "text": "bagno",
+     "en": "bathroom",
+     "he": "חדר רחצה"
+    },
+    {
+     "text": "ogni",
+     "en": "every",
+     "he": "כל"
+    },
+    {
+     "text": "signora",
+     "en": "Mrs / lady",
+     "he": "גברת"
+    }
+   ]
+  },
+  {
+   "id": "sc",
+   "title": {
+    "en": "sc / sch",
+    "he": "sc / sch"
+   },
+   "rule": {
+    "en": "Before a, o, u 'sc' is S+K (scuola). Before e or i it is SH (scena, pesce). 'sch' keeps the hard K sound before e/i (schiena).",
+    "he": "לפני a, o, u הצירוף sc הוא סק (scuola). לפני e או i הוא ש (scena, pesce). sch שומר על ק קשה לפני e/i (schiena)."
+   },
+   "items": [
+    {
+     "text": "scuola",
+     "en": "school",
+     "he": "בית ספר"
+    },
+    {
+     "text": "scena",
+     "en": "scene",
+     "he": "סצנה"
+    },
+    {
+     "text": "pesce",
+     "en": "fish",
+     "he": "דג"
+    },
+    {
+     "text": "sciare",
+     "en": "to ski",
+     "he": "לסקי"
+    },
+    {
+     "text": "schiena",
+     "en": "back",
+     "he": "גב"
+    }
+   ]
+  },
+  {
+   "id": "double consonants",
+   "title": {
+    "en": "Double consonants",
+    "he": "עיצורים כפולים"
+   },
+   "rule": {
+    "en": "Double consonants are held longer, and the length changes the meaning: nono (ninth) vs nonno (grandfather).",
+    "he": "עיצור כפול נמשך זמן רב יותר, והאורך משנה את המשמעות: nono (תשיעי) לעומת nonno (סבא)."
+   },
+   "items": [
+    {
+     "text": "nono",
+     "en": "ninth",
+     "he": "תשיעי"
+    },
+    {
+     "text": "nonno",
+     "en": "grandfather",
+     "he": "סבא"
+    },
+    {
+     "text": "sete",
+     "en": "thirst",
+     "he": "צמא"
+    },
+    {
+     "text": "sette",
+     "en": "seven",
+     "he": "שבע"
+    },
+    {
+     "text": "pala",
+     "en": "shovel",
+     "he": "את חפירה"
+    },
+    {
+     "text": "palla",
+     "en": "ball",
+     "he": "כדור"
+    },
+    {
+     "text": "anno",
+     "en": "year",
+     "he": "שנה"
+    },
+    {
+     "text": "mamma",
+     "en": "mum",
+     "he": "אמא"
+    }
+   ]
+  },
+  {
+   "id": "stress",
+   "title": {
+    "en": "Stress",
+    "he": "הטעמה"
+   },
+   "rule": {
+    "en": "Most words stress the second-to-last syllable (parLAre). A written accent marks final stress (città, caffè). Some words stress the third-to-last (TElefono).",
+    "he": "ברוב המילים ההטעמה היא על ההברה הלפני-אחרונה (parLAre). סימן מוטעם כתוב מציין הטעמה בסוף המילה (città, caffè). במילים מסוימות ההטעמה על ההברה השלישית מהסוף (TElefono)."
+   },
+   "items": [
+    {
+     "text": "parlare",
+     "en": "to speak",
+     "he": "לדבר"
+    },
+    {
+     "text": "città",
+     "en": "city",
+     "he": "עיר"
+    },
+    {
+     "text": "caffè",
+     "en": "coffee",
+     "he": "קפה"
+    },
+    {
+     "text": "telefono",
+     "en": "telephone",
+     "he": "טלפון"
+    },
+    {
+     "text": "università",
+     "en": "university",
+     "he": "אוניברסיטה"
+    },
+    {
+     "text": "perché",
+     "en": "why / because",
+     "he": "למה"
+    }
+   ]
+  }
+ ]
+}

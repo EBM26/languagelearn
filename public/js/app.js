@@ -14,11 +14,14 @@ import * as reference from './views/reference.js';
 import * as stats from './views/stats.js';
 import * as story from './views/story.js';
 import * as stories from './views/stories.js';
+import * as talk from './views/talk.js';
+import * as pronunciation from './views/pronunciation.js';
 
-const routes = { home, study, alphabet, languages, say, deck, reference, stats, story, stories };
+const routes = { home, study, alphabet, languages, say, deck, reference, stats, story, stories, talk, pronunciation };
 // [route, label key, routes that highlight it, visible?]
 const NAV = [
-  ['home', 'nav_today', ['home', 'study', 'alphabet', 'story', 'stories']],
+  ['home', 'nav_today', ['home', 'study', 'alphabet', 'pronunciation', 'story', 'stories']],
+  ['talk', 'talk_title', ['talk']],
   ['say', 'say', ['say']],
   ['deck', 'deck', ['deck']],
   ['reference', 'reference', ['reference'], () => profile()?.grammar_topics?.length],

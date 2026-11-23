@@ -219,3 +219,28 @@ main.container { padding-block: var(--space-8) var(--space-12); }
 .sheet { position: fixed; z-index: 35; inset-inline: var(--gutter); inset-block-end: var(--space-4); max-width: 460px; margin-inline: auto;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: var(--space-5); display: grid; gap: var(--space-3); }
 .sheet__head { display: flex; align-items: center; gap: var(--space-3); }
+
+/* ============ Speaking practice ============ */
+.chat { display: grid; gap: var(--space-3); }
+.bubble { max-width: min(92%, 520px); padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); display: grid; gap: var(--space-2); }
+.bubble--ai { justify-self: start; background: var(--surface-3); border-end-start-radius: var(--space-1); }
+.bubble--me { justify-self: end; background: var(--primary-soft); border-end-end-radius: var(--space-1); }
+.mic--on { border-color: var(--danger); color: var(--danger); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 4px var(--danger-soft); } }
+.correction { padding-block: var(--space-3); border-block-end: 1px solid var(--border); display: grid; gap: var(--space-1); }
+.correction:last-child { border-block-end: 0; }
+.correction__said { text-decoration: line-through; text-decoration-color: var(--danger); }
+
+/* ============ Stats / home ============ */
+.chip { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-pill); background: var(--surface-3); color: var(--text-2); font-size: var(--text-sm); text-decoration: none; }
+.chip--done { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
+.nudge { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius); background: var(--surface-2); border: 1px dashed var(--border-strong); font-size: var(--text-sm); }
+.nudge--done { border-style: solid; background: var(--primary-soft); }
+.bars { display: flex; align-items: stretch; gap: var(--space-1); height: 140px; }
+.bars__col { flex: 1; display: grid; grid-template-rows: auto 1fr auto; justify-items: center; align-items: end; min-width: 0; }
+.bars__bar { width: 100%; max-width: 28px; background: var(--primary); border-radius: 4px 4px 0 0; align-self: end; }
+.bars__bar--empty { background: var(--border); }
+.bars__val, .bars__lbl { font-size: var(--text-xs); color: var(--text-3); }
+.weak { display: grid; grid-template-columns: minmax(90px, 1fr) 2fr auto; align-items: center; gap: var(--space-3); }
+.weak__lbl { font-size: var(--text-sm); font-weight: 500; }
+.meter > div { height: 100%; background: var(--primary); border-radius: inherit; }

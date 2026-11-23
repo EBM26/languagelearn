@@ -97,3 +97,30 @@ ${tr ? '"latin" and "hebrew": transliteration of "b" (Hebrew letters for "hebrew
 SENTENCES_JSON:${JSON.stringify(sentences.map((s, i) => ({ i, target: s.target })))}
 Return {"sentences": [{"i": index, "tokens": [{"t","b",${tr ? '"latin","hebrew",' : ''}"en","he"}]}]}`;
 }
+
+// ---- Phase 5: speaking practice ----
+export function talkPrompt(p, { topic, known, history, mode }) {
+  const tr = p.transliteration?.enabled;
+  const how = mode === 'first' ? 'Start the conversation: greet the learner and ask ONE simple question about the topic.'
+    : mode === 'final' ? 'This is the last turn: reply briefly and close the conversation warmly. Do not ask a question.'
+    : 'Reply in character to the learner\'s last message, then ask ONE short question to keep the conversation going.';
+  return `TASK: talk
+You are a friendly conversation partner chatting with a language learner, speaking ${p.names.en}.
+Topic / situation: ${topic}
+Level: the learner knows roughly these words: ${JSON.stringify(known)}. Use short, simple sentences (under ~10 words) built mostly from them; at most one unfamiliar word per turn.
+${how}
+The learner's lines come from speech recognition and may contain transcription slips: be forgiving, never correct them here, and never switch to English or Hebrew.
+CONVERSATION_JSON:${JSON.stringify(history)}
+Return {"reply": {"target": your line in ${p.script} script${p.diacritics ? ' (fully vowelled)' : ''}, ${tr ? '"translit_latin": string, "translit_hebrew": string, ' : ''}"en": English, "he": Hebrew}}.`;
+}
+
+export function correctPrompt(p, history) {
+  return `TASK: correct
+Below is a practice conversation in ${p.names.en}. Review ONLY the learner's lines ("role":"user"). They come from speech recognition, so ignore likely transcription artifacts and minor punctuation.
+Pick up to 5 of the learner's most useful real mistakes (grammar, wrong word, unnatural or wrong-variety phrasing) and give the better version. If there are no real mistakes, return an empty list.
+For each: "said" (what the learner said), "item" (the better version as a flashcard), "explanation" (one or two short sentences in English and in Hebrew saying what was wrong).
+Also write a 1-2 sentence encouraging "summary" of how it went, in English and Hebrew.
+Return {"summary": {"en": string, "he": string}, "corrections": [{"said": string, "item": ITEM, "explanation": {"en": string, "he": string}}]}.
+ITEM: ${itemSpec(p)} Use "type": "phrase" unless it is a single word.
+USER_TURNS_JSON:${JSON.stringify(history)}`;
+}

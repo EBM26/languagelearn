@@ -1,0 +1,300 @@
+{
+ "topics": [
+  {
+   "id": "umlauts",
+   "title": {
+    "en": "Umlauts (ä ö ü)",
+    "he": "אומלאוטים (ä ö ü)"
+   },
+   "rule": {
+    "en": "ä is like 'e' in 'bed' (long: like 'air'). ö: say 'e' with rounded lips. ü: say 'ee' with rounded lips.",
+    "he": "ä נשמעת כמו e ב-bed (ארוכה: כמו ב-air). ö: אומרים e בשפתיים מעוגלות. ü: אומרים i בשפתיים מעוגלות."
+   },
+   "items": [
+    {
+     "text": "Mädchen",
+     "en": "girl",
+     "he": "ילדה"
+    },
+    {
+     "text": "schön",
+     "en": "beautiful",
+     "he": "יפה"
+    },
+    {
+     "text": "Bücher",
+     "en": "books",
+     "he": "ספרים"
+    },
+    {
+     "text": "fünf",
+     "en": "five",
+     "he": "חמש"
+    },
+    {
+     "text": "Löffel",
+     "en": "spoon",
+     "he": "כף"
+    },
+    {
+     "text": "müde",
+     "en": "tired",
+     "he": "עייף"
+    }
+   ]
+  },
+  {
+   "id": "ß",
+   "title": {
+    "en": "ß",
+    "he": "ß"
+   },
+   "rule": {
+    "en": "ß is a sharp 's' (like 'ss'). It is used after long vowels and diphthongs.",
+    "he": "ß היא s חדה (כמו ss). משתמשים בה אחרי תנועות ארוכות ודיפתונגים."
+   },
+   "items": [
+    {
+     "text": "Straße",
+     "en": "street",
+     "he": "רחוב"
+    },
+    {
+     "text": "heiß",
+     "en": "hot",
+     "he": "חם"
+    },
+    {
+     "text": "Fuß",
+     "en": "foot",
+     "he": "רגל"
+    },
+    {
+     "text": "groß",
+     "en": "big",
+     "he": "גדול"
+    },
+    {
+     "text": "Spaß",
+     "en": "fun",
+     "he": "כיף"
+    }
+   ]
+  },
+  {
+   "id": "ch",
+   "title": {
+    "en": "ch",
+    "he": "ch"
+   },
+   "rule": {
+    "en": "After a, o, u, au: a rough sound in the throat, like Hebrew ח (Buch). After e, i, ä, ö, ü, l, n, r: a soft hissing sound made with the tongue near the palate (ich). -chen is always soft.",
+    "he": "אחרי a, o, u, au: צליל גרוני חזק, כמו ח בעברית (Buch). אחרי e, i, ä, ö, ü, l, n, r: צליל רך ומשרקק, כשהלשון קרובה לחך (ich). הסיומת -chen תמיד רכה."
+   },
+   "items": [
+    {
+     "text": "ich",
+     "en": "I",
+     "he": "אני"
+    },
+    {
+     "text": "nicht",
+     "en": "not",
+     "he": "לא"
+    },
+    {
+     "text": "Buch",
+     "en": "book",
+     "he": "ספר"
+    },
+    {
+     "text": "acht",
+     "en": "eight",
+     "he": "שמונה"
+    },
+    {
+     "text": "Milch",
+     "en": "milk",
+     "he": "חלב"
+    },
+    {
+     "text": "Mädchen",
+     "en": "girl",
+     "he": "ילדה"
+    }
+   ]
+  },
+  {
+   "id": "ei/ie",
+   "title": {
+    "en": "ei / ie",
+    "he": "ei / ie"
+   },
+   "rule": {
+    "en": "'ei' sounds like 'eye' (ein). 'ie' is a long 'ee' (Liebe). Remember: the second letter gives the sound.",
+    "he": "ei נשמעת כמו 'איי' (ein). ie היא i ארוכה (Liebe). כלל זכירה: האות השנייה קובעת את הצליל."
+   },
+   "items": [
+    {
+     "text": "ein",
+     "en": "a / one",
+     "he": "אחד"
+    },
+    {
+     "text": "mein",
+     "en": "my",
+     "he": "שלי"
+    },
+    {
+     "text": "Zeit",
+     "en": "time",
+     "he": "זמן"
+    },
+    {
+     "text": "Liebe",
+     "en": "love",
+     "he": "אהבה"
+    },
+    {
+     "text": "Brief",
+     "en": "letter",
+     "he": "מכתב"
+    },
+    {
+     "text": "Bier",
+     "en": "beer",
+     "he": "בירה"
+    }
+   ]
+  },
+  {
+   "id": "eu/äu",
+   "title": {
+    "en": "eu / äu",
+    "he": "eu / äu"
+   },
+   "rule": {
+    "en": "Both 'eu' and 'äu' sound like 'oy' in 'boy'.",
+    "he": "גם eu וגם äu נשמעות כמו 'אוי' (כמו oy ב-boy)."
+   },
+   "items": [
+    {
+     "text": "neu",
+     "en": "new",
+     "he": "חדש"
+    },
+    {
+     "text": "Freund",
+     "en": "friend",
+     "he": "חבר"
+    },
+    {
+     "text": "heute",
+     "en": "today",
+     "he": "היום"
+    },
+    {
+     "text": "Deutsch",
+     "en": "German",
+     "he": "גרמנית"
+    },
+    {
+     "text": "Häuser",
+     "en": "houses",
+     "he": "בתים"
+    },
+    {
+     "text": "Träume",
+     "en": "dreams",
+     "he": "חלומות"
+    }
+   ]
+  },
+  {
+   "id": "final devoicing",
+   "title": {
+    "en": "Final devoicing",
+    "he": "עיצור קולי בסוף מילה"
+   },
+   "rule": {
+    "en": "At the end of a word (or syllable), b, d, g sound like p, t, k: Tag sounds like 'tahk', Hund like 'hunt'.",
+    "he": "בסוף מילה (או הברה) האותיות b, d, g נשמעות כמו p, t, k: Tag נשמע 'טאק', Hund נשמע 'הונט'."
+   },
+   "items": [
+    {
+     "text": "Tag",
+     "en": "day",
+     "he": "יום"
+    },
+    {
+     "text": "Hund",
+     "en": "dog",
+     "he": "כלב"
+    },
+    {
+     "text": "Geld",
+     "en": "money",
+     "he": "כסף"
+    },
+    {
+     "text": "Kind",
+     "en": "child",
+     "he": "ילד"
+    },
+    {
+     "text": "Berg",
+     "en": "mountain",
+     "he": "הר"
+    },
+    {
+     "text": "ab",
+     "en": "off / from",
+     "he": "מ-"
+    }
+   ]
+  },
+  {
+   "id": "z/s/w/v",
+   "title": {
+    "en": "z / s / w / v",
+    "he": "z / s / w / v"
+   },
+   "rule": {
+    "en": "z = 'ts' (Zeit). s before a vowel = 'z' as in 'zoo' (Sonne). w = English 'v' (Wasser). v = usually 'f' (Vater), but 'v' in foreign words (Vase).",
+    "he": "z = 'ts' (Zeit). s לפני תנועה = z כמו ב-zoo (Sonne). w = v באנגלית (Wasser). v = בדרך כלל f (Vater), אבל v במילים לועזיות (Vase)."
+   },
+   "items": [
+    {
+     "text": "zehn",
+     "en": "ten",
+     "he": "עשר"
+    },
+    {
+     "text": "Zeit",
+     "en": "time",
+     "he": "זמן"
+    },
+    {
+     "text": "Sonne",
+     "en": "sun",
+     "he": "שמש"
+    },
+    {
+     "text": "Wasser",
+     "en": "water",
+     "he": "מים"
+    },
+    {
+     "text": "Vater",
+     "en": "father",
+     "he": "אבא"
+    },
+    {
+     "text": "Vase",
+     "en": "vase",
+     "he": "אגרטל"
+    }
+   ]
+  }
+ ]
+}

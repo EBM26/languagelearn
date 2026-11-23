@@ -93,3 +93,22 @@ export function applyGloss(p, raw, sentences) {
   if (ok < Math.ceil(sentences.length * 0.7)) throw new Error('word glosses incomplete');
   return sentences;
 }
+
+// ---- Phase 5: speaking practice ----
+export function normalizeReply(p, raw) {
+  const r = raw?.reply ?? raw;
+  const target = str(r?.target), en = str(r?.en), he = str(r?.he);
+  if (!target || !en || !he || !HE_RE.test(he)) return null;
+  if (SCRIPT_RE[p.script] && !SCRIPT_RE[p.script].test(target)) return null;
+  const tr = p.transliteration?.enabled;
+  return { role: 'ai', target, latin: tr ? str(r.translit_latin) : null, hebrew: tr ? str(r.translit_hebrew) : null, en, he };
+}
+export function normalizeCorrections(p, raw) {
+  const summary = bi(raw?.summary);
+  const list = (Array.isArray(raw?.corrections) ? raw.corrections : []).slice(0, 5).map((c) => {
+    const item = normalizeItem(p, { ...c?.item, type: c?.item?.type === 'word' ? 'word' : 'phrase' });
+    const said = str(c?.said), explanation = bi(c?.explanation);
+    return item && said && explanation ? { said, item, explanation } : null;
+  }).filter(Boolean);
+  return { summary, corrections: list };
+}

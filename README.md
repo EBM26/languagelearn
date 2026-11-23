@@ -3,14 +3,14 @@
 Personal multi-language learning app. Plain HTML/CSS/JS on Cloudflare Pages + Pages Functions + D1.
 Language behavior lives in `public/profiles/*.json`, not in code. Full spec: `language-app-prompt.md`.
 
-**Status: Phase 4** (Phases 1–3 + daily stories with tap-to-translate and audio).
+**Status: Phases 1–7 built.** (Phase 7 = Italian/German code and pronunciation modules; they are ready but not activated, and not tested with real LLM output yet.)
 
 ## Front-end design system
 - `public/app.css` is the only stylesheet. Colours, spacing, radii, shadows, type scale and widths are CSS variables on `:root`; change them there.
   The page is a 1200px centred container (header included); focused flows use a 760px reading measure. Logical properties are used throughout so Hebrew RTL mirrors correctly.
 - `public/js/ui.js` holds the shared components: custom `select`, `segmented`, `toggle`, `badge`/`statusBadge`, `alertEl` (the single way to show an error), `field`, `pageHead`.
 - Target-language text uses `targetEl(text, profile, 'md'|'lg'|'xl')`; sizes derive from the profile's `font.size`.
-- Interface language, transliteration and diacritics live in the settings popover (sliders icon in the header). The Stats page is a placeholder until Phase 6.
+- Interface language, transliteration and diacritics live in the settings popover (sliders icon in the header).
 
 ## Layout
 - `public/` static app (`js/`, `strings/{en,he}.json`, `profiles/`, `data/arabic-alphabet.json`)
@@ -27,7 +27,7 @@ Local dev: copy `.dev.vars.example` to `.dev.vars` and put your Gemini key in it
 (`LLM_PROVIDER=mock` gives canned data with no key). Other providers (`anthropic`, `openai`) are still available via the same vars.
 
 ## Seed decks
-- A profile generates a seed deck only if `seed.enabled` is true in its JSON (on for `ar-lev`; off for `it`/`de` until Phase 7).
+- A profile generates a seed deck only if `seed.enabled` is true in its JSON (on for `ar-lev`, `it` and `de`; inactive profiles never call the LLM).
 - Languages page → "Generate seed deck". It runs ~75 small batches (20 items each) and is resumable: close the tab, press Continue later.
   With `seed.verify: true` each batch gets a second LLM pass that corrects MSA drift.
 - Edit or fix the seed at `#/deck`: search/filter, edit any field, delete, unflag, or "Regenerate with AI" for a flagged card.
@@ -58,7 +58,35 @@ Local dev: copy `.dev.vars.example` to `.dev.vars` and put your Gemini key in it
 - The session generates the story in the background when it starts; "Report / rewrite" replaces it using your note.
 - Remember `npm run migrate:remote` after pushing (migration 0004).
 
-## "I want to say…"
+## Speaking practice (Phase 5)
+- `#/talk` and the last step of the daily session: a 5-10 turn conversation with an AI partner on today's topic (your newest "I want to say..." request,
+  else the latest story, else small talk). The partner uses mostly words you know and the profile's variety rules.
+- Voice input: the mic button records with `MediaRecorder` and posts to `/api/transcribe`, which runs **Workers AI Whisper** (`@cf/openai/whisper-large-v3-turbo`)
+  with the profile's `speech.whisper_lang`. Works on iOS. You can always type instead, and the transcript is editable before sending.
+- Needs the Workers AI binding, declared in `wrangler.toml` (`[ai] binding = "AI"`); usage is billed to your Cloudflare account.
+  Without it `/api/transcribe` answers 501 and the app falls back to typing.
+- After the conversation, one LLM call returns up to 5 corrections (what you said, a better version, a short explanation in your interface language).
+  Each becomes a card with `source = 'mistake'` and jumps to the front of the new-card queue. Finishing is idempotent.
+- Conversations and corrections are stored in `conversations` / `corrections` and listed under `#/talk`.
+
+## Stats, streaks and the weekly nudge (Phase 6)
+- Home shows, per active language: due/new counts, a streak badge, today's session steps (done/left, each links to its step) and the weekly nudge.
+- `#/stats` per language: current/best streak (a day counts if you did any review or finished any step; an unfinished today doesn't break it),
+  minutes today and for the last 14 days, items started and "well known" (stability >= 21 days), retention (share of reviews of already-known cards
+  graded Hard or better in the last 30 days, shown after 10 such reviews) and the weakest grammar axes.
+- Minutes = card-review time + the story and speaking steps.
+- "Talk to a real person this week" nudge with a checkbox, stored per language per week (weeks start Monday) in `human_practice`.
+- Run `npm run migrate:remote` after pushing (migration 0005).
+
+## Italian and German (Phase 7)
+Both profiles have `seed.enabled: true` and a pronunciation module, but stay inactive until you press Activate on the Languages page.
+- Pronunciation module (`#/pronunciation`): listen-and-repeat items per topic from `public/data/pronunciation-{it,de}.json` (rule in en/he, words with glosses),
+  then a reading-aloud check of 10 words (>= 80%). Recordings use the same Whisper pipeline; the transcript is compared with the target text
+  (edit-distance similarity >= 0.75, accents ignored). Without a mic you self-grade; words Whisper mishears can be counted manually.
+- Everything else (grammar, reference tables, stories, speaking) is driven by the profile JSON, with no code branches.
+- The items are a plain data file, so edit freely. To give a new profile a pronunciation module add `pronunciation_module: {enabled, data, check_items, pass_threshold}`.
+
+## "I want to say..."
 `#/say`: describe a situation in Hebrew or English; the LLM adds 3–8 phrases/words as `personal` cards that come before the frequency list.
 
 ## Local development

@@ -134,6 +134,16 @@ function mock(user) {
       sentences: Array.from({ length: n }, (_, i) => ({ speaker: dialogue ? (i % 2 ? 'Sara' : 'Omar') : null, target: sent(i),
         translit_latin: 'mock sentence ' + i, translit_hebrew: 'משפט ' + i, en: 'Mock sentence ' + i, he: 'משפט דוגמה ' + i })) });
   }
+  if (task === 'talk') {
+    const n = JSON.parse(user.slice(user.indexOf('CONVERSATION_JSON:') + 18).split('\nReturn')[0]).length;
+    return JSON.stringify({ reply: { target: arabic(n + 40) + ' ' + arabic(n + 41) + '؟', translit_latin: 'mock reply ' + n, translit_hebrew: 'תשובה ' + n,
+      en: 'Mock reply ' + n, he: 'תשובת דוגמה ' + n } });
+  }
+  if (task === 'correct') {
+    const turns = JSON.parse(user.slice(user.indexOf('USER_TURNS_JSON:') + 16)).filter((m) => m.role === 'user');
+    return JSON.stringify({ summary: { en: 'Good effort!', he: 'כל הכבוד!' }, corrections: turns.slice(0, 1).map((m, i) => ({
+      said: m.text, item: item(77 + i, { type: 'phrase' }), explanation: { en: 'Mock explanation.', he: 'הסבר לדוגמה.' } })) });
+  }
   if (task === 'gloss') {
     const list = JSON.parse(user.slice(user.indexOf('SENTENCES_JSON:') + 15).split('\nReturn')[0]);
     return JSON.stringify({ sentences: list.map((s) => ({ i: s.i, tokens: s.target.split(' ').map((w, k) => ({ t: w, b: w.replace('.', ''), latin: 'w' + k, hebrew: 'ו' + k, en: 'word ' + k, he: 'מילה ' + k })) })) });

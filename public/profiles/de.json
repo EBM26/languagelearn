@@ -25,7 +25,10 @@
       "eu/äu",
       "final devoicing",
       "z/s/w/v"
-    ]
+    ],
+    "data": "/data/pronunciation-de.json",
+    "check_items": 10,
+    "pass_threshold": 0.8
   },
   "transliteration": {
     "enabled": false,
@@ -99,7 +102,7 @@
   "seed": {
     "size": 1500,
     "instructions": "Frequency-ordered everyday Standard German vocabulary and phrases; nouns with der/die/das.",
-    "enabled": false,
+    "enabled": true,
     "batch": 20,
     "verify": false
   },

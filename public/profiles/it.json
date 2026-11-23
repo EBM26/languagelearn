@@ -25,7 +25,10 @@
       "sc",
       "double consonants",
       "stress"
-    ]
+    ],
+    "data": "/data/pronunciation-it.json",
+    "check_items": 10,
+    "pass_threshold": 0.8
   },
   "transliteration": {
     "enabled": false,
@@ -86,7 +89,7 @@
   "seed": {
     "size": 1500,
     "instructions": "Frequency-ordered everyday Standard Italian vocabulary and phrases.",
-    "enabled": false,
+    "enabled": true,
     "batch": 20,
     "verify": false
   },
